@@ -29,13 +29,17 @@
         "LICENSE",
         "README.md"
     ],
-    "main": "bin/main.js",
+    "main": "bin/backend/main.js",
     "scripts": {
-        "build": "npx tsc",
+        "build": "npm run build:backend && npm run build:frontend",
+        "build:backend": "npx tsc --build src/backend/tsconfig.json",
+        "build:frontend": "npx tsc --build src/frontend/tsconfig.json",
         "clean": "rm -rf bin",
-        "lint": "npx eslint \"src/**/*.ts\"",
-        "prepack": "npm run clean && npx tsc -p tsconfig.release.json",
-        "start": "node bin/main.js",
+        "lint": "npm run lint:backend && npm run lint:frontend",
+        "lint:backend": "cd src/backend && npx eslint .",
+        "lint:frontend": "cd src/frontend && npx eslint .",
+        "prepack": "npm run clean && npx tsc -p src/backend/tsconfig.release.json && npx tsc -p src/frontend/tsconfig.release.json",
+        "start": "node bin/backend/main.js"
     },
     "private": true
 }

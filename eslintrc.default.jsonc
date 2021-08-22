@@ -1,15 +1,8 @@
 {
     "root": true,
-    "env": {
-        "browser": false,
-        "es6": true,
-        "node": true
-    },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "project": "./tsconfig.json",
-        "sourceType": "module",
-        "ecmaVersion": 2019
+        "sourceType": "module"
     },
     "plugins": [
         "@typescript-eslint"
@@ -98,6 +91,13 @@
                 "selector": "default",
                 "format": ["camelCase"],
                 "leadingUnderscore": "forbid",
+                "trailingUnderscore": "forbid"
+            },
+            {
+                "selector": "classProperty",
+                "modifiers": ["private"],
+                "format": ["camelCase"],
+                "leadingUnderscore": "allow",
                 "trailingUnderscore": "forbid"
             },
             {

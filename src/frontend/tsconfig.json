@@ -1,0 +1,13 @@
+{
+	"extends": "../../tsconfig.default.json",
+	"compilerOptions": {
+		"module": "es2015",
+		"target": "es2018",
+		"moduleResolution": "node",
+
+		"outDir": "../../bin/frontend"
+	},
+	"include": [
+		"./**/*.ts"
+	]
+}
