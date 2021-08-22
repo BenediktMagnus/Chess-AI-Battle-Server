@@ -29,6 +29,7 @@
     },
     "files": [
         "bin",
+        "files",
         "LICENSE",
         "README.md"
     ],
