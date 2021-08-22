@@ -1,0 +1,33 @@
+{
+    "name": "chess-ai-battle-server",
+    "version": "0.1.0-dev",
+    "description": "A server for chess AIs to battle against each other.",
+    "author": "Benedikt Magnus",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/BenediktMagnus/Chess-AI-Battle-Server.git"
+    },
+    "keywords": [
+        "bot",
+        "discord"
+    ],
+    "engines": {
+        "node": ">=14.15.0"
+    },
+    "dependencies": {
+    },
+    "devDependencies": {
+        "@types/node": "14.17.9",
+        "typescript": "4.3.5"
+    },
+    "files": [
+        "bin",
+        "LICENSE",
+        "README.md"
+    ],
+    "main": "bin/main.js",
+    "scripts": {
+    },
+    "private": true
+}
