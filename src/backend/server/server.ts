@@ -7,7 +7,7 @@ import net from 'net';
 
 export default class Server
 {
-    public static readonly defaultHttpPort = 80;
+    public static readonly defaultHttpPort = 8080;
     public static readonly defaultTcpPort = 2409;
 
     private readonly express: express.Express;
