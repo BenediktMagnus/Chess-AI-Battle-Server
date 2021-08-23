@@ -17,11 +17,14 @@ export default class Server
 
     private readonly tcp: net.Server;
 
+    private socketToDataBuffer: Map<net.Socket, string>;
+
     public httpPort: number;
     public tcpPort: number;
 
     public readonly onConnect: EventHandler<(socket: net.Socket) => void>;
     public readonly onDisconnect: EventHandler<(socket: net.Socket) => void>;
+    /** Fired when a socket received a new line of data. */
     public readonly onReceive: EventHandler<(socket: net.Socket, data: string) => void>;
     public readonly onError: EventHandler<(error: Error) => void>;
 
@@ -74,6 +77,8 @@ export default class Server
 
         this.tcp.maxConnections = 2; // A chess server only needs two players.
 
+        this.socketToDataBuffer = new Map();
+
         this.onConnect = new EventHandler();
         this.onDisconnect = new EventHandler();
         this.onReceive = new EventHandler();
@@ -92,12 +97,39 @@ export default class Server
 
     private onTcpDisconnection (socket: net.Socket): void
     {
+        this.socketToDataBuffer.delete(socket);
+
         this.onDisconnect.dispatchEvent(socket);
     }
 
+    /**
+     * Splits the incoming data into lines and fires the onReceive event.
+     * Data without a line break is buffered until data with a line break is received.
+     */
     private onTcpReceive (socket: net.Socket, data: string): void
     {
-        this.onReceive.dispatchEvent(socket, data);
+        let remainingData = (this.socketToDataBuffer.get(socket) ?? '') + data;
+
+        let lineEndingIndex = remainingData.indexOf('\n');
+
+        while (lineEndingIndex !== -1)
+        {
+            const line = remainingData.substring(0, lineEndingIndex);
+            remainingData = remainingData.substring(lineEndingIndex + 1);
+
+            this.onReceive.dispatchEvent(socket, line);
+
+            lineEndingIndex = remainingData.indexOf('\n');
+        }
+
+        if (remainingData.length > 0)
+        {
+            this.socketToDataBuffer.set(socket, remainingData);
+        }
+        else
+        {
+            this.socketToDataBuffer.delete(socket);
+        }
     }
 
     private onTcpError (error: Error): void
