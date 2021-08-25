@@ -1,0 +1,17 @@
+{
+    "env": {
+        "browser": false,
+        "es6": true,
+        "mocha": true,
+        "node": true
+    },
+    "root": true,
+    "parserOptions": {
+        "project": "./tsconfig.json",
+        "sourceType": "module",
+        "ecmaVersion": 2019
+    },
+    "extends": [
+        "../eslintrc.default.jsonc"
+    ]
+}
