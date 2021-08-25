@@ -6,7 +6,7 @@
     },
     "root": true,
     "parserOptions": {
-        "project": "src/frontend/tsconfig.json",
+        "project": "./tsconfig.json",
         "sourceType": "module",
         "ecmaVersion": 2018
     },
