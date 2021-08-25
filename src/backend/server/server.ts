@@ -63,9 +63,14 @@ export default class Server
 
         // Serving of html files on root level without extension:
         this.express.use('/', express.static('./files/html', {extensions: ['html']}));
-        // Serving of static resources:
+        // Serving of static ressources:
         this.express.use('/css', express.static('./files/css'));
         this.express.use('/images', express.static('./files/images'));
+
+        // Serving of the cm-chessboard assets:
+        this.express.use('/cm-chessboard/assets', express.static('./node_modules/cm-chessboard/assets'));
+        // Serving of the cm-chessboard sources:
+        this.express.use('/cm-chessboard/src', express.static('./node_modules/cm-chessboard/src/cm-chessboard'));
 
         this.httpPort = Server.defaultHttpPort;
 
