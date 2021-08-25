@@ -24,8 +24,8 @@ export default class Server
 
     public readonly onConnect: EventHandler<(socket: net.Socket) => void>;
     public readonly onDisconnect: EventHandler<(socket: net.Socket) => void>;
-    /** Fired when a socket received a new line of data. */
-    public readonly onReceive: EventHandler<(socket: net.Socket, data: string) => void>;
+    /** Fired when a socket received a message (every line of data is a message). */
+    public readonly onMessage: EventHandler<(socket: net.Socket, message: string) => void>;
     public readonly onError: EventHandler<(error: Error) => void>;
 
     constructor ()
@@ -81,7 +81,7 @@ export default class Server
 
         this.onConnect = new EventHandler();
         this.onDisconnect = new EventHandler();
-        this.onReceive = new EventHandler();
+        this.onMessage = new EventHandler();
         this.onError = new EventHandler();
     }
 
@@ -117,7 +117,7 @@ export default class Server
             const line = remainingData.substring(0, lineEndingIndex);
             remainingData = remainingData.substring(lineEndingIndex + 1);
 
-            this.onReceive.dispatchEvent(socket, line);
+            this.onMessage.dispatchEvent(socket, line);
 
             lineEndingIndex = remainingData.indexOf('\n');
         }
