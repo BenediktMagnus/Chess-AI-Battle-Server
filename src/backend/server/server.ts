@@ -22,7 +22,9 @@ export default class Server
     public httpPort: number;
     public tcpPort: number;
 
+    /** Fired when a new socket connected. */
     public readonly onConnect: EventHandler<(socket: net.Socket) => void>;
+    /** Fired when a socket disconnected. */
     public readonly onDisconnect: EventHandler<(socket: net.Socket) => void>;
     /** Fired when a socket received a message (every line of data is a message). */
     public readonly onMessage: EventHandler<(socket: net.Socket, message: string) => void>;
