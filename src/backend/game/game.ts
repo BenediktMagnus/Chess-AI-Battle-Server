@@ -19,7 +19,20 @@ export class Game
 
     public get currentTurn (): Colour
     {
-        return Colour[this.chess.turn() as keyof typeof Colour];
+        const colourString = this.chess.turn();
+
+        if (colourString === 'w')
+        {
+            return Colour.White;
+        }
+        else if (colourString === 'b')
+        {
+            return Colour.Black;
+        }
+        else
+        {
+            return Colour.None;
+        }
     }
 
     public get state (): GameState
