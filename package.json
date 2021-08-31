@@ -57,6 +57,7 @@
         "lint": "npm run lint:backend && npm run lint:frontend",
         "lint:backend": "cd src/backend && npx eslint .",
         "lint:frontend": "cd src/frontend && npx eslint .",
+        "prestart": "npm run build",
         "prepack": "npm run clean && npx tsc -p src/backend/tsconfig.release.json && npx tsc -p src/frontend/tsconfig.release.json",
         "start": "node bin/backend/main.js",
         "test": "npx mocha -r ts-node/register/transpile-only 'tests/**/*.ts'"
