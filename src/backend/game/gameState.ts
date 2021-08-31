@@ -1,10 +1,10 @@
 export enum GameState
 {
-    Running = 0,
-    Check = 1,
-    Checkmate = 2,
-    Stalemate = 3,
-    FiftyMoveRule = 4,
-    ThreefoldRepetition = 5,
-    InsufficientMaterial = 6,
+    Running = 'r',
+    Check = 'c',
+    Checkmate = 'm',
+    Stalemate = 's',
+    FiftyMoveRule = 'f',
+    ThreefoldRepetition = 't',
+    InsufficientMaterial = 'i',
 }
