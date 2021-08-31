@@ -6,6 +6,7 @@
         "noImplicitThis": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
+        "noImplicitOverride": true,
 
         "allowJs": false,
         "esModuleInterop": true,
