@@ -77,6 +77,9 @@ export class Game
         this.chess.reset();
     }
 
+    /**
+     * @returns True if the move was legal and successfull, false otherwise.
+     */
     public tryMove (player: Player, from: string, to: string, promotion?: string): boolean
     {
         if (player.colour !== this.currentTurn)
