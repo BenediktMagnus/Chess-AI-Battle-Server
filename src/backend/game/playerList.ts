@@ -35,7 +35,7 @@ export class PlayerList
 
     /**
      * Remove a player from the list.
-     * Does nothing if the player is already in the list.
+     * Do nothing if the player is already in the list.
      * @param player The player to remove.
      */
     public remove (player: Player): void
@@ -45,23 +45,25 @@ export class PlayerList
 
     /**
      * Look for the given socket and remove the corresponding player.
+     * Do nothing if the socket is not found.
      * @param socket The socket to look for.
-     * @throws If no player in the list has the given socket.
      */
     public removeBySocket (socket: net.Socket): void
     {
         const player = this.getBySocket(socket);
 
-        this.remove(player);
+        if (player !== null)
+        {
+            this.remove(player);
+        }
     }
 
     /**
      * Look for the given socket and return the corresponding player.
      * @param socket The socket to search for.
-     * @returns The player if found.
-     * @throws If the player is not in the list.
+     * @returns The player if found, otherwise null.
      */
-    public getBySocket (socket: net.Socket): Player
+    public getBySocket (socket: net.Socket): Player|null
     {
         for (const player of this.players)
         {
@@ -71,6 +73,6 @@ export class PlayerList
             }
         }
 
-        throw new Error('The player is not in the list.');
+        return null;
     }
 }

@@ -70,6 +70,18 @@ describe('PlayerList',
             }
         );
 
+        it('returns null if trying to get a player that is not in the list',
+            function ()
+            {
+                const playerList = new PlayerList();
+                const player = new Player(mockito.instance(socketMock), 1);
+
+                const returnedPlayer = playerList.getBySocket(player.socket);
+
+                assert.isNull(returnedPlayer);
+            }
+        );
+
         it('can remove a player by its socket',
             function ()
             {
@@ -96,18 +108,6 @@ describe('PlayerList',
 
                 assert.throws(
                     () => playerList.add(player3)
-                );
-            }
-        );
-
-        it('throws an error if trying to get a player that is not in the list',
-            function ()
-            {
-                const playerList = new PlayerList();
-                const player = new Player(mockito.instance(socketMock), 1);
-
-                assert.throws(
-                    () => playerList.getBySocket(player.socket)
                 );
             }
         );
