@@ -4,6 +4,7 @@ import { assert } from 'chai';
 import { Colour } from '../../../src/backend/game/colour';
 import { Game } from '../../../src/backend/game/game';
 import { GameState } from '../../../src/backend/game/gameState';
+import { MoveResult } from '../../../src/backend/game/moveResult';
 import net from 'net';
 import { Player } from '../../../src/backend/game/player';
 
@@ -51,7 +52,7 @@ describe('Game',
 
                 const move = game.tryMove(whitePlayer, 'a2', 'a3');
 
-                assert.equal(move, true);
+                assert.equal(move, MoveResult.Success);
             }
         );
 
@@ -72,7 +73,7 @@ describe('Game',
                 game.tryMove(blackPlayer, 'c6', 'd6');
 
                 const move = game.tryMove(whitePlayer, 'a7', 'a8', 'q');
-                assert.equal(move, true);
+                assert.equal(move, MoveResult.Success);
 
                 const board = game.board;
                 assert.equal(board[0], 'Q');
@@ -323,7 +324,7 @@ describe('Game',
 
                 const move = game.tryMove(whitePlayer, 'a1', 'a2');
 
-                assert.equal(move, false);
+                assert.equal(move, MoveResult.InvalidMove);
             }
         );
 
@@ -334,7 +335,7 @@ describe('Game',
 
                 const move = game.tryMove(blackPlayer, 'a7', 'a6');
 
-                assert.equal(move, false);
+                assert.equal(move, MoveResult.NotYourTurn);
             }
         );
     }

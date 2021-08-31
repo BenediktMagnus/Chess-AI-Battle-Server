@@ -1,6 +1,7 @@
 import { Chess, ChessInstance, PieceType, Square as PositionNotation } from 'chess.js';
 import { Colour } from './colour';
 import { GameState } from './gameState';
+import { MoveResult } from './moveResult';
 import { Player } from './player';
 
 export class Game
@@ -80,27 +81,21 @@ export class Game
     /**
      * @returns True if the move was legal and successfull, false otherwise.
      */
-    public tryMove (player: Player, from: string, to: string, promotion?: string): boolean
+    public tryMove (player: Player, from: string, to: string, promotion?: string): MoveResult
     {
         if (player.colour !== this.currentTurn)
         {
-            console.error(`Player "${player.name}" (${player.colour}) tried to move when it was not his turn.`);
-
-            return false;
+            return MoveResult.NotYourTurn;
         }
 
         if (!this.stringIsPositionNotation(from) || !this.stringIsPositionNotation(to))
         {
-            console.error(`Player "${player.name}" tried to move with an invalid position notation.`);
-
-            return false;
+            return MoveResult.InvalidNotation;
         }
 
         if (promotion !== undefined && !this.stringIsPromotablePiece(promotion))
         {
-            console.error(`Player "${player.name}" tried to promote with an invalid piece.`);
-
-            return false;
+            return MoveResult.InvalidPromotion;
         }
 
         const move = this.chess.move(
@@ -113,14 +108,10 @@ export class Game
 
         if (move === null)
         {
-            console.error(
-                `Player "${player.name}" (${player.colour}) tried to move with the invalid move ${from}-${to} (FEN: ${this.chess.fen()}).`
-            );
-
-            return false;
+            return MoveResult.InvalidMove;
         }
 
-        return true;
+        return MoveResult.Success;
     }
 
     private stringIsPositionNotation (aString: string): aString is PositionNotation
