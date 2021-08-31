@@ -51,6 +51,13 @@ export class ChessAiBattleServer
      */
     private onPlayerConnect (socket: net.Socket): void
     {
+        if (this.players.count >= 2)
+        {
+            socket.destroy();
+
+            return;
+        }
+
         const player = new Player(socket, this.players.count + 1);
 
         this.players.add(player);
