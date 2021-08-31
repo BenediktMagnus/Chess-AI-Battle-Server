@@ -1,4 +1,4 @@
-export enum Command
+export enum ClientToServerCommand
 {
     Turn = 't',
     Name = 'n',

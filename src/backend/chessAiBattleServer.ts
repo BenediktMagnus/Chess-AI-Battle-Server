@@ -1,6 +1,6 @@
 import * as EventFunctionDefinitions from '../shared/eventFunctionDefinitions';
 import * as TypedSocketIo from './server/typedSocketIo';
-import { Command } from './server/command';
+import { ClientToServerCommand } from './communication/command/clientToServerCommand';
 import { Game } from './game/game';
 import { MoveResult } from './game/moveResult';
 import net from 'net';
@@ -97,10 +97,10 @@ export class ChessAiBattleServer
 
         switch (command)
         {
-            case Command.Turn:
+            case ClientToServerCommand.Turn:
                 this.doTurn(player, data);
                 break;
-            case Command.Name:
+            case ClientToServerCommand.Name:
                 player.name = data;
                 break;
             default:
