@@ -75,4 +75,21 @@ export class PlayerList
 
         return null;
     }
+
+    /**
+     * Get the player that is not the given one, i.e. the other player.
+     * @returns The other player if there is one, otherwise null.
+     */
+    public getOther (player: Player): Player|null
+    {
+        for (const otherPlayer of this.players)
+        {
+            if (otherPlayer !== player)
+            {
+                return otherPlayer;
+            }
+        }
+
+        return null;
+    }
 }
