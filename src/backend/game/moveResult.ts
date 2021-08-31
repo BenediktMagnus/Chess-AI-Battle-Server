@@ -4,5 +4,5 @@ export enum MoveResult
     NotYourTurn = 't',
     InvalidNotation = 'n',
     InvalidPromotion = 'p',
-    InvalidMove = 'm',
+    IllegalMove = 'm',
 }

@@ -108,7 +108,7 @@ export class Game
 
         if (move === null)
         {
-            return MoveResult.InvalidMove;
+            return MoveResult.IllegalMove;
         }
 
         return MoveResult.Success;
