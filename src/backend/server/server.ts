@@ -99,6 +99,8 @@ export default class Server
 
     private onTcpConnection (socket: net.Socket): void
     {
+        socket.setEncoding('utf8');
+
         this.onConnect.dispatchEvent(socket);
     }
 
