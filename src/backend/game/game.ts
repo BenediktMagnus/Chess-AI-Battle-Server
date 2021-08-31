@@ -84,16 +84,22 @@ export class Game
     {
         if (player.colour !== this.currentTurn)
         {
+            console.error(`Player "${player.name}" (${player.colour}) tried to move when it was not his turn.`);
+
             return false;
         }
 
         if (!this.stringIsPositionNotation(from) || !this.stringIsPositionNotation(to))
         {
+            console.error(`Player "${player.name}" tried to move with an invalid position notation.`);
+
             return false;
         }
 
         if (promotion !== undefined && !this.stringIsPromotablePiece(promotion))
         {
+            console.error(`Player "${player.name}" tried to promote with an invalid piece.`);
+
             return false;
         }
 
@@ -105,7 +111,16 @@ export class Game
             }
         );
 
-        return move !== null;
+        if (move === null)
+        {
+            console.error(
+                `Player "${player.name}" (${player.colour}) tried to move with the invalid move ${from}-${to} (FEN: ${this.chess.fen()}).`
+            );
+
+            return false;
+        }
+
+        return true;
     }
 
     private stringIsPositionNotation (aString: string): aString is PositionNotation
