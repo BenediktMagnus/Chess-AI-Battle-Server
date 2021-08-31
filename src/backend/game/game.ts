@@ -24,25 +24,30 @@ export class Game
 
     public get state (): GameState
     {
-        if (this.chess.insufficient_material())
+        if (this.chess.game_over())
         {
-            return GameState.InsufficientMaterial;
-        }
-        else if (this.chess.in_threefold_repetition())
-        {
-            return GameState.ThreefoldRepetition;
-        }
-        else if (this.chess.in_draw())
-        {
-            return GameState.FiftyMoveRule;
-        }
-        else if (this.chess.in_stalemate())
-        {
-            return GameState.Stalemate;
-        }
-        else if (this.chess.in_checkmate())
-        {
-            return GameState.Checkmate;
+            if (this.chess.insufficient_material())
+            {
+                return GameState.InsufficientMaterial;
+            }
+            else if (this.chess.in_threefold_repetition())
+            {
+                return GameState.ThreefoldRepetition;
+            }
+            else if (this.chess.in_stalemate())
+            {
+                return GameState.Stalemate;
+            }
+            else if (this.chess.in_draw())
+            {
+                return GameState.FiftyMoveRule;
+            }
+            else if (this.chess.in_checkmate())
+            {
+                return GameState.Checkmate;
+            }
+
+            throw new Error('Unknown game over state');
         }
         else if (this.chess.in_check())
         {
