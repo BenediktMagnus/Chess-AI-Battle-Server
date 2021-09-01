@@ -1,4 +1,5 @@
 import { ChessAiBattleServer } from "./chessAiBattleServer";
+import { Server } from "./server/server";
 
 class Main
 {
@@ -46,7 +47,9 @@ class Main
 
         this.applicationIsRunning = true;
 
-        this.chessAiBattleServer = new ChessAiBattleServer();
+        const server = new Server();
+
+        this.chessAiBattleServer = new ChessAiBattleServer(server);
 
         this.chessAiBattleServer.run();
 

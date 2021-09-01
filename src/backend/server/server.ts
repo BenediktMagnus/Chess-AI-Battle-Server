@@ -5,7 +5,7 @@ import EventHandler from '../utility/eventHandler';
 import express from 'express';
 import net from 'net';
 
-export default class Server
+export class Server
 {
     public static readonly defaultHttpPort = 8080;
     public static readonly defaultTcpPort = 2409;

@@ -9,7 +9,7 @@ import { MoveResult } from './game/moveResult';
 import net from 'net';
 import { Player } from './game/player';
 import { PlayerList } from './game/playerList';
-import Server from "./server/server";
+import { Server } from './server/server';
 
 const httpPort = 8032;
 const tcpPort = 2409;
@@ -27,7 +27,7 @@ export class ChessAiBattleServer
     /** The maximum number of rounds (game restarts) until the battle is stopped. Set to max integer for a (practically) endless battle. */
     public maxRounds: number;
 
-    constructor ()
+    constructor (server: Server)
     {
         this.maxTurnTimeMs = defaultMaxTurnTimeMs;
         this.maxRounds = defaultRounds;
@@ -37,7 +37,7 @@ export class ChessAiBattleServer
 
         this.players = new PlayerList();
 
-        this.server = new Server();
+        this.server = server;
 
         this.server.httpPort = httpPort;
         this.server.tcpPort = tcpPort;
