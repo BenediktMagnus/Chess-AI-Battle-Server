@@ -13,9 +13,9 @@ const socketMock = mockito.mock(net.Socket);
 describe('Game',
     function ()
     {
-        const whitePlayer = new Player(socketMock, 0);
+        const whitePlayer = new Player(mockito.instance(socketMock), 0);
         whitePlayer.colour = Colour.White;
-        const blackPlayer = new Player(socketMock, 1);
+        const blackPlayer = new Player(mockito.instance(socketMock), 1);
         blackPlayer.colour = Colour.Black;
 
         it('is in running state at the beginning.',
@@ -324,7 +324,7 @@ describe('Game',
 
                 const move = game.tryMove(whitePlayer, 'a1', 'a2');
 
-                assert.equal(move, MoveResult.InvalidMove);
+                assert.equal(move, MoveResult.IllegalMove);
             }
         );
 
