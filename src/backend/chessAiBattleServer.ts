@@ -271,7 +271,8 @@ export class ChessAiBattleServer
         socket.on('init', this.onViewerInit.bind(this));
     }
 
-    private onViewerInit (reply: EventFunctionDefinitions.InitReply): void
+    private onViewerInit (_reply: EventFunctionDefinitions.InitReply): void
     {
+        throw new Error('Method not implemented.');
     }
 }
