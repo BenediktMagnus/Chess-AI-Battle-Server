@@ -3,30 +3,74 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Chess AI Battle Server</title>
+	<title localId="title">Chess AI Battle Server</title>
 
     <!-- Icon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg" sizes="any">
 
 	<!-- Stylesheets -->
 	<link rel="stylesheet" type="text/css" href="/cm-chessboard/assets/styles/cm-chessboard.css">
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
 
     <script type="module">
         import {Chessboard} from "/cm-chessboard/src/Chessboard.js";
 
         new Chessboard(
-            document.getElementById("board1"),
+            document.getElementById("board"),
             {
-                position: "rn2k1r1/ppp1pp1p/3p2p1/5bn1/P7/2N2B2/1PPPPP2/2BNK1RR",
+                position: "start",
+                animationDuration: 20,
                 sprite: {
                     url: "/cm-chessboard/assets/images/chessboard-sprite-staunty.svg",
-                }
+                },
             }
         );
     </script>
+
+	<!-- Scripts -->
+	<script type="module" src="/scripts/main.js"></script>
 </head>
 <body>
-    <h1>Chess AI Battle Server</h1>
-    <div class="board" id="board"></div>
+    <header>
+        <h1 localId="headerTitle"></h1>
+    </header>
+    <main>
+        <section id="board" class="board"></section>
+        <section class="statistics">
+            <h2> <span localId="statisticsRounds"></span> <span id="rounds">0</span></h2>
+            <table>
+                <tr>
+                    <td></td>
+                    <th id="namePlayer1"></th></th>
+                    <th id="namePlayer2"></th>
+                </tr>
+                <tr>
+                    <th localId="statisticsWins"></th>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <th localId="statisticsLosses"></th>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <th localId="statisticsStalemates"></th>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <th localId="statisticsDraws"></th>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <th localId="statisticsChecks"></th>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+            </table>
+        </section>
+    </main>
 </body>
 </html>

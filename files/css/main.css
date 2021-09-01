@@ -1,0 +1,81 @@
+:root {
+    --element-padding: 0.75rem;
+    --header-size: 3rem;
+
+    font-size: calc((1.2vh + 1.2vw) / 2);
+}
+
+* {
+    margin: 0;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #000;
+
+    color: #FFF;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header, main, footer {
+    padding: var(--element-padding);
+}
+
+header > h1 {
+    height: 1em;
+    font-size: var(--header-size);
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+}
+
+main > section {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+main > section:first-child {
+    float: left;
+}
+
+main > section:last-child {
+    float: right;
+}
+
+.board {
+    max-width: calc(100vh - var(--header-size) - var(--element-padding) * 4);
+}
+
+.statistics {
+    --border-spacing: 0.5rem;
+
+    padding: 0 5%;
+
+    text-align: right;
+}
+
+.statistics > h2 {
+    margin-right: var(--border-spacing);
+}
+
+.statistics > table {
+    width: 100%;
+
+    margin-top: calc(var(--element-padding) * 2);
+
+    border-spacing: var(--border-spacing);
+
+    font-size: 2em;
+}
+
+.statistics > table > tbody > tr > * {
+    min-width: 10%;
+}
