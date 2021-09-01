@@ -64,7 +64,7 @@ export class Server
         // Serving of html files on root level without extension:
         this.express.use('/', express.static('./files/html', {extensions: ['html']}));
         // Serving of static ressources:
-        this.express.use('/css', express.static('./files/css'));
+        this.express.use('/css', express.static('./files/css', {extensions: ['css']}));
         this.express.use('/images', express.static('./files/images'));
         // Serving of localisation files:
         this.express.use('/local', express.static('./files/local', {extensions: ['json']}));
