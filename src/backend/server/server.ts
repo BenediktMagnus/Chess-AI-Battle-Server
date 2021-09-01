@@ -66,6 +66,8 @@ export class Server
         // Serving of static ressources:
         this.express.use('/css', express.static('./files/css'));
         this.express.use('/images', express.static('./files/images'));
+        // Serving of localisation files:
+        this.express.use('/local', express.static('./files/local', {extensions: ['json']}));
 
         // Serving of the cm-chessboard assets:
         this.express.use('/cm-chessboard/assets', express.static('./node_modules/cm-chessboard/assets'));
