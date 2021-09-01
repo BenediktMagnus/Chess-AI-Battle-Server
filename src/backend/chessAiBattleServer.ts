@@ -74,6 +74,27 @@ export class ChessAiBattleServer
         const player = new Player(socket, this.players.count + 1);
 
         this.players.add(player);
+
+        const otherPlayer = this.players.getOther(player);
+
+        if (otherPlayer !== null)
+        {
+            // Start the game.
+
+            this.game.reset();
+            this.roundsDone = 0;
+
+            const playerIsWhite = Math.random() < 0.5;
+
+            player.colour = playerIsWhite ? Colour.White : Colour.Black;
+            otherPlayer.colour = playerIsWhite ? Colour.Black : Colour.White;
+
+            const newGameMessagePlayer = new Messages.NewGameMessage(player.colour);
+            this.sendMessage(player, newGameMessagePlayer);
+
+            const newGameMessageOtherPlayer = new Messages.NewGameMessage(otherPlayer.colour);
+            this.sendMessage(otherPlayer, newGameMessageOtherPlayer);
+        }
     }
 
     /**
