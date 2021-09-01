@@ -1,0 +1,10 @@
+{
+    "title": "Wettkampf der Schach-KIs",
+    "headerTitle": "Wettkampf der Schach-KIs",
+    "statisticsRounds": "Runden:",
+    "statisticsWins": "Siege",
+    "statisticsLosses": "Niederlagen",
+    "statisticsStalemates": "Patts",
+    "statisticsDraws": "Remis",
+    "statisticsChecks": "Im Schach"
+}

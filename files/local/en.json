@@ -1,0 +1,10 @@
+{
+    "title": "Chess AI Battle Server",
+    "headerTitle": "Chess AI Battle Server",
+    "statisticsRounds": "Rounds:",
+    "statisticsWins": "Wins",
+    "statisticsLosses": "Losses",
+    "statisticsStalemates": "Stalemates",
+    "statisticsDraws": "Draws",
+    "statisticsChecks": "In check"
+}
