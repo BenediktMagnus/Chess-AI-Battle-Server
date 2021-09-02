@@ -56,9 +56,9 @@ export class Server
         }
         else
         {
-            // If not stated in command line, only serve script files from the build directory.
+            // If not stated in command line, only serve script files from the bin directory.
             // We do not want map and source files in a production environment!
-            this.express.use('/scripts', express.static('./build/frontend', {extensions: ['js']}));
+            this.express.use('/scripts', express.static('./bin/frontend', {extensions: ['js']}));
         }
 
         // Serving of html files on root level without extension:
