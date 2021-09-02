@@ -1,5 +1,5 @@
 import { Translator } from './localisation/translator';
-//import { Utils } from '../shared/utils';
+import { Utils } from './utility/utils';
 
 class Main
 {
@@ -9,7 +9,7 @@ class Main
     {
         this.translator = new Translator();
 
-        const catchedOnDocumentLoaded = this.catchVoidPromise(this.onDocumentLoaded.bind(this));
+        const catchedOnDocumentLoaded = Utils.catchVoidPromise(this.onDocumentLoaded.bind(this));
 
         // DOM events:
         if (document.readyState === 'loading')
@@ -30,21 +30,6 @@ class Main
     private async onDocumentLoaded (): Promise<void>
     {
         await this.translator.run();
-    }
-
-    private catchVoidPromise (promiseReturner: (...args: any[]) => Promise<void>): (...args: any[]) => void
-    {
-        const arrowFunction = (...args: any[]): void =>
-        {
-            promiseReturner(...args).catch(
-                (error) =>
-                {
-                    console.error(error);
-                }
-            );
-        };
-
-        return arrowFunction;
     }
 }
 
