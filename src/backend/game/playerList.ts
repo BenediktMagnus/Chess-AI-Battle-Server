@@ -58,6 +58,11 @@ export class PlayerList
         }
     }
 
+    public getAll (): Player[]
+    {
+        return Array.from(this.players);
+    }
+
     /**
      * Look for the given socket and return the corresponding player.
      * @param socket The socket to search for.
