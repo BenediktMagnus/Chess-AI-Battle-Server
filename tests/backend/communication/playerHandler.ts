@@ -1,14 +1,15 @@
 import 'mocha';
 import * as mockito from 'ts-mockito';
-import * as TypedSocketIo from '../../src/backend/server/typedSocketIo';
+import * as TypedSocketIo from '../../../src/backend/server/typedSocketIo';
 import { assert } from 'chai';
-import { ChessAiBattleServer } from '../../src/backend/chessAiBattleServer';
-import { ClientToServerCommand } from '../../src/backend/communication/command/clientToServerCommand';
-import { Colour } from '../../src/backend/game/colour';
-import EventHandler from '../../src/backend/utility/eventHandler';
+import { ClientToServerCommand } from '../../../src/backend/communication/command/clientToServerCommand';
+import { Colour } from '../../../src/backend/game/colour';
+import EventHandler from '../../../src/backend/utility/eventHandler';
+import { Game } from '../../../src/backend/game/game';
 import net from 'net';
-import { Server } from '../../src/backend/server/server';
-import { ServerToClientCommand } from '../../src/backend/communication/command/serverToClientCommand';
+import { PlayerHandler } from '../../../src/backend/communication/playerHandler';
+import { Server } from '../../../src/backend/server/server';
+import { ServerToClientCommand } from '../../../src/backend/communication/command/serverToClientCommand';
 
 let serverMock: Server;
 let socketIoMock: TypedSocketIo.Server;
@@ -19,7 +20,7 @@ let connectEventHandler: EventHandler<(socket: net.Socket) => void>;
 let disconnectEventHandler: EventHandler<(socket: net.Socket) => void>;
 let messageEventHandler: EventHandler<(socket: net.Socket, message: string) => void>;
 
-let chessAiBattleServer: ChessAiBattleServer;
+let playerHandler: PlayerHandler;
 
 resetTestEnvironment();
 
@@ -39,12 +40,12 @@ function resetTestEnvironment (): void
     mockito.when(serverMock.onMessage).thenReturn(messageEventHandler);
     mockito.when(serverMock.socketIo).thenReturn(socketIoMock);
 
-    chessAiBattleServer = new ChessAiBattleServer(mockito.instance(serverMock));
-    chessAiBattleServer.maxTurnTimeMs = Number.MAX_SAFE_INTEGER;
-    chessAiBattleServer.maxRounds = Number.MAX_SAFE_INTEGER;
+    const game = new Game();
+
+    playerHandler = new PlayerHandler(mockito.instance(serverMock), game, Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);
 }
 
-describe('ChessAiBattleServer',
+describe('PlayerHandler',
     function ()
     {
         beforeEach(
