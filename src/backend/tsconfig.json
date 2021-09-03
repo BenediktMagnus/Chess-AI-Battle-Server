@@ -4,7 +4,8 @@
 		"module": "commonjs",
 		"target": "es2020",
 
-		"outDir": "../../bin"
+		"outDir": "../../bin",
+        "tsBuildInfoFile": "../../bin/tsbuildinfo.backend.json"
 	},
 	"include": [
 		"./**/*.ts"
