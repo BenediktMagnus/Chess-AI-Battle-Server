@@ -1,8 +1,7 @@
-import * as EventFunctionDefinitions from '../shared/eventFunctionDefinitions';
-import * as TypedSocketIo from './server/typedSocketIo';
 import { Game } from './game/game';
 import { PlayerHandler } from './communication/playerHandler';
 import { Server } from './server/server';
+import { ViewerHandler } from './communication/viewerHandler';
 
 const httpPort = 8032;
 const tcpPort = 2409;
@@ -13,6 +12,7 @@ export class ChessAiBattleServer
 {
     private readonly server: Server;
     private readonly playerHandler: PlayerHandler;
+    private readonly viewerHandler: ViewerHandler;
 
     constructor (server: Server)
     {
@@ -24,8 +24,7 @@ export class ChessAiBattleServer
         const game = new Game();
 
         this.playerHandler = new PlayerHandler(this.server, game, maxTurnTimeMs, rounds);
-
-        this.server.socketIo.on('connection', this.onViewerConnect.bind(this));
+        this.viewerHandler = new ViewerHandler(this.server);
     }
 
     public run (): void
@@ -35,18 +34,9 @@ export class ChessAiBattleServer
 
     public async terminate (): Promise<void>
     {
+        this.viewerHandler.terminate();
         this.playerHandler.terminate();
 
         await this.server.stop();
-    }
-
-    private onViewerConnect (socket: TypedSocketIo.Socket): void
-    {
-        socket.on('init', this.onViewerInit.bind(this));
-    }
-
-    private onViewerInit (_reply: EventFunctionDefinitions.InitReply): void
-    {
-        throw new Error('Method not implemented.');
     }
 }
