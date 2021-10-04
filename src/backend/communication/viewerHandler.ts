@@ -1,17 +1,21 @@
 import * as EventFunctionDefinitions from '../../shared/eventFunctionDefinitions';
 import * as TypedSocketIo from '../server/typedSocketIo';
 import { Server } from '../server/server';
+import { Statistician } from '../statistic/statistician';
 
 export class ViewerHandler
 {
-    private viewers: Set<TypedSocketIo.Socket>;
     private server: Server;
+    private statistician: Statistician;
 
-    constructor (server: Server)
+    private viewers: Set<TypedSocketIo.Socket>;
+
+    constructor (server: Server, statistician: Statistician)
     {
-        this.viewers = new Set();
-
         this.server = server;
+        this.statistician = statistician;
+
+        this.viewers = new Set();
 
         this.server.socketIo.on('connection', this.onConnection);
     }

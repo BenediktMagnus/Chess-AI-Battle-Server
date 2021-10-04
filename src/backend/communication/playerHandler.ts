@@ -8,11 +8,14 @@ import net from 'net';
 import { Player } from '../game/player';
 import { PlayerList } from '../game/playerList';
 import { Server } from '../server/server';
+import { Statistician } from '../statistic/statistician';
 
 export class PlayerHandler
 {
     private readonly server: Server;
     private readonly game: Game;
+    private readonly statistician: Statistician;
+
     private readonly players: PlayerList;
 
     private roundsDone: number;
@@ -21,13 +24,14 @@ export class PlayerHandler
     /** The maximum number of rounds (game restarts) until the battle is stopped. Set to max integer for a (practically) endless battle. */
     public maxRounds: number;
 
-    constructor (server: Server, game: Game, maxTurnTimeMs: number, maxRounds: number)
+    constructor (server: Server, game: Game, statistician: Statistician, maxTurnTimeMs: number, maxRounds: number)
     {
         this.maxTurnTimeMs = maxTurnTimeMs;
         this.maxRounds = maxRounds;
         this.roundsDone = 0;
 
         this.game = game;
+        this.statistician = statistician;
 
         this.players = new PlayerList();
 
@@ -77,8 +81,9 @@ export class PlayerHandler
         {
             // Start the game.
 
-            this.game.reset();
             this.roundsDone = 0;
+            this.game.reset();
+            this.statistician.recordNewGame();
 
             const playerIsWhite = Math.random() < 0.5;
 
@@ -181,6 +186,7 @@ export class PlayerHandler
         {
             this.roundsDone++;
             this.game.reset();
+            this.statistician.recordNewGame();
 
             if (this.roundsDone >= this.maxRounds)
             {
@@ -216,6 +222,8 @@ export class PlayerHandler
 
     private doMove (player: Player, otherPlayer: Player, moveData: string): void
     {
+        this.statistician.recordMove(moveData);
+
         const from = moveData.substr(0, 2);
         const to = moveData.substr(2, 2);
         const promotion = moveData.length > 4 ? moveData[4] : undefined;
@@ -236,21 +244,29 @@ export class PlayerHandler
                     }
                 case GameState.Check:
                     {
+                        this.statistician.recordCheck(otherPlayer);
+
                         const checkMessage = new Messages.CheckMessage(from, to, promotion);
                         this.sendMessage(otherPlayer, checkMessage);
+
                         break;
                     }
                 case GameState.Checkmate:
                     {
+                        this.statistician.recordWin(player);
+
                         const wonMessage = new Messages.WonMessage();
                         this.sendMessage(player, wonMessage);
 
                         const lostMessage = new Messages.LostMessage(from, to, promotion);
                         this.sendMessage(otherPlayer, lostMessage);
+
                         break;
                     }
                 case GameState.Stalemate:
                     {
+                        this.statistician.recordStalemate(otherPlayer);
+
                         const stalemateWithoutTurnMessage = new Messages.StalemateWithoutTurnMessage();
                         this.sendMessage(player, stalemateWithoutTurnMessage);
 
@@ -263,6 +279,8 @@ export class PlayerHandler
                 case GameState.ThreefoldRepetition:
                 case GameState.InsufficientMaterial:
                     {
+                        this.statistician.recordDraw(otherPlayer);
+
                         const drawWithoutTurnMessage = new Messages.DrawWithoutTurnMessage();
                         this.sendMessage(player, drawWithoutTurnMessage);
 
