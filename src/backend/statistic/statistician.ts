@@ -8,6 +8,12 @@ export class Statistician
     private scores: Map<Player, PlayerScore>;
     private moves: string[][];
 
+    /** The number of rounds done. */
+    public get rounds (): number
+    {
+        return this.moves.length;
+    }
+
     public get playerScores (): ReadonlyArray<Readonly<PlayerScore>>
     {
         return Array.from(this.scores.values());

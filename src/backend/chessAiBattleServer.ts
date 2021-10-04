@@ -26,7 +26,7 @@ export class ChessAiBattleServer
         const statistician = new Statistician();
 
         this.playerHandler = new PlayerHandler(this.server, game, statistician, maxTurnTimeMs, rounds);
-        this.viewerHandler = new ViewerHandler(this.server, statistician);
+        this.viewerHandler = new ViewerHandler(this.server, game, statistician);
     }
 
     public run (): void
