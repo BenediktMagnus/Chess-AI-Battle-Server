@@ -1,17 +1,13 @@
 import { Player } from "../game/player";
+import { PlayerStatistic } from "../../shared/playerStatistic";
 
-export class PlayerScore
+export class PlayerScore implements Omit<PlayerStatistic, 'playerName'>
 {
     public player: Player;
-    /** Times the player has won. */
     public wins: number;
-    /** Times the player has lost. */
     public losses: number;
-    /** Times the game ended in stalemate at this player's turn. */
     public stalemates: number;
-    /** Times the game ended in draw at this player's turn. */
     public draws: number;
-    /** Times the player has been in check. */
     public checks: number;
 
     constructor (player: Player)
