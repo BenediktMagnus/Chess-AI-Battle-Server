@@ -250,6 +250,15 @@ export class PlayerHandler
                         break;
                     }
                 case GameState.Stalemate:
+                    {
+                        const stalemateWithoutTurnMessage = new Messages.StalemateWithoutTurnMessage();
+                        this.sendMessage(player, stalemateWithoutTurnMessage);
+
+                        const stalemateWithTurnMessage = new Messages.StalemateWithTurnMessage(from, to, promotion);
+                        this.sendMessage(otherPlayer, stalemateWithTurnMessage);
+
+                        break;
+                    }
                 case GameState.FiftyMoveRule:
                 case GameState.ThreefoldRepetition:
                 case GameState.InsufficientMaterial:

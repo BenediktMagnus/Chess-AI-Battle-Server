@@ -6,6 +6,8 @@ export * from './endMessage';
 export * from './invalidMoveMessage';
 export * from './lostMessage';
 export * from './newGameMessage';
+export * from './stalemateWithoutTurnMessage';
+export * from './stalemateWithTurnMessage';
 export * from './timeoutMessage';
 export * from './turnMessage';
 export * from './wonMessage';
