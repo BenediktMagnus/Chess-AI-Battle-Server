@@ -171,6 +171,7 @@ export class PlayerHandler
         {
             console.error(`Player "${player.name}" exceeded max turn time.`);
 
+            this.statistician.recordWin(otherPlayer);
             const timeoutMessage = new Messages.TimeoutMessage();
             this.sendMessage(player, timeoutMessage);
 
