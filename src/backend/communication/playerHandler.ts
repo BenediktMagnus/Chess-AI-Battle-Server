@@ -117,16 +117,12 @@ export class PlayerHandler
         {
             console.error(`Received message "${message}" from unknown player.`);
 
-            // TODO: What happens here for the statistics?
-
             return;
         }
 
         if (message.length < 2)
         {
             console.error(`Received too short message "${message}" from player "${player.name}".`);
-
-            // TODO: What happens here for the statistics?
 
             return;
         }
@@ -172,6 +168,9 @@ export class PlayerHandler
             console.error(`Player "${player.name}" exceeded max turn time.`);
 
             this.statistician.recordWin(otherPlayer);
+            // TODO: Should we record timeouts in the statistics?
+            // TODO: Should we record needed turn times in the statistics?
+
             const timeoutMessage = new Messages.TimeoutMessage();
             this.sendMessage(player, timeoutMessage);
 
