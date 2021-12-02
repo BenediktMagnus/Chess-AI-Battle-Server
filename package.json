@@ -49,18 +49,18 @@
     "main": "bin/backend/main.js",
     "scripts": {
         "build": "npm run build:backend && npm run build:frontend",
-        "build:backend": "npx tsc --build src/backend/tsconfig.json",
-        "build:frontend": "npx tsc --build src/frontend/tsconfig.json",
+        "build:backend": "./node_modules/.bin/tsc --build src/backend/tsconfig.json",
+        "build:frontend": "./node_modules/.bin/tsc --build src/frontend/tsconfig.json",
         "clean": "rm -rf bin && rm -rf coverage",
-        "coverage": "npx nyc npm run test",
-        "coverage:text": "npx nyc --reporter=text npm run test",
+        "coverage": "./node_modules/.bin/nyc npm run test",
+        "coverage:text": "./node_modules/.bin/nyc --reporter=text npm run test",
         "lint": "npm run lint:backend && npm run lint:frontend",
-        "lint:backend": "cd src/backend && npx eslint .",
-        "lint:frontend": "cd src/frontend && npx eslint .",
+        "lint:backend": "cd src/backend && ../../node_modules/.bin/eslint .",
+        "lint:frontend": "cd src/frontend && ../../node_modules/.bin/eslint .",
         "prestart": "npm run build",
-        "prepack": "npm run clean && npx tsc -p src/backend/tsconfig.release.json && npx tsc -p src/frontend/tsconfig.release.json",
+        "prepack": "npm run clean && ./node_modules/.bin/tsc -p src/backend/tsconfig.release.json && ./node_modules/.bin/tsc -p src/frontend/tsconfig.release.json",
         "start": "node bin/backend/main.js",
-        "test": "npx mocha -r ts-node/register/transpile-only 'tests/**/*.ts'"
+        "test": "./node_modules/.bin/mocha -r ts-node/register/transpile-only 'tests/**/*.ts'"
     },
     "private": true
 }
