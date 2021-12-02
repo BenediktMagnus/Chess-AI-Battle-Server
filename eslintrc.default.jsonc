@@ -52,6 +52,12 @@
                 "ignoreReadBeforeAssign": true
             }
         ],
+        "no-constant-condition": [
+            "error",
+            {
+                "checkLoops": false
+            }
+        ],
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/no-unused-vars": "off", // Provided by the tsconfig.json
         "@typescript-eslint/no-explicit-any": "off",
@@ -84,6 +90,13 @@
                 "selector": "default",
                 "format": ["camelCase"],
                 "leadingUnderscore": "forbid",
+                "trailingUnderscore": "forbid"
+            },
+            {
+                "selector": "parameter",
+                "modifiers": ["unused"],
+                "format": ["camelCase"],
+                "leadingUnderscore": "allow",
                 "trailingUnderscore": "forbid"
             },
             {
