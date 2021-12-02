@@ -2,7 +2,7 @@
 	"extends": "../../tsconfig.default.json",
 	"compilerOptions": {
 		"module": "commonjs",
-		"target": "es2020",
+		"target": "es2021",
 
 		"outDir": "../../bin",
         "tsBuildInfoFile": "../../bin/tsbuildinfo.backend.json"
