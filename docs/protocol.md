@@ -12,8 +12,9 @@ Segment: TCP/IP segment.
 
 Char: A single ASCII character.
 String: A sequence of multiple chars.
-Field: One of the following chars: 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
-Position: Two fields concenated with no separator.
+Column: One of the following chars: 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
+Row: One of the following chars: '1', '2', '3', '4', '5', '6', '7', '8'
+Position: Column and field, concenated with no separator, e.g. 'a1'
 Promotion: One of the following chars: 'b' (bishop), 'n' (knight), 'q' (queen), 'r' (rook)
 Colour: One of the following chars: 'b' (black), 'w' (white)
 
