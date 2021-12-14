@@ -1,4 +1,5 @@
 import * as TypedSocketIo from './typedSocketIo';
+import { Chessboard } from './dependency/chessboard';
 import { io } from './dependency/socketIoClient';
 import { Translator } from './localisation/translator';
 import { Utils } from './utility/utils';
@@ -36,6 +37,17 @@ class Main
     private async onDocumentLoaded (): Promise<void>
     {
         await this.translator.run();
+
+        new Chessboard(
+            document.getElementById('board'),
+            {
+                position: 'start',
+                animationDuration: 20,
+                sprite: {
+                    url: '/cm-chessboard/assets/images/chessboard-sprite-staunty.svg',
+                },
+            }
+        );
     }
 }
 
