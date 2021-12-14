@@ -10,6 +10,7 @@ import net from 'net';
 import { PlayerHandler } from '../../../src/backend/communication/playerHandler';
 import { Server } from '../../../src/backend/server/server';
 import { ServerToClientCommand } from '../../../src/backend/communication/command/serverToClientCommand';
+import { Statistician } from '../../../src/backend/statistic/statistician';
 
 let serverMock: Server;
 let socketIoMock: TypedSocketIo.Server;
@@ -41,8 +42,9 @@ function resetTestEnvironment (): void
     mockito.when(serverMock.socketIo).thenReturn(socketIoMock);
 
     const game = new Game();
+    const statistician = new Statistician();
 
-    playerHandler = new PlayerHandler(mockito.instance(serverMock), game, Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);
+    playerHandler = new PlayerHandler(mockito.instance(serverMock), game, statistician, Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);
 }
 
 describe('PlayerHandler',
