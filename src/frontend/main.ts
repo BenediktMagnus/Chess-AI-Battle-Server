@@ -1,13 +1,17 @@
+import * as TypedSocketIo from './typedSocketIo';
+import { io } from './dependency/socketIoClient';
 import { Translator } from './localisation/translator';
 import { Utils } from './utility/utils';
 
 class Main
 {
     private translator: Translator;
+    private socket: TypedSocketIo.Socket;
 
     constructor ()
     {
         this.translator = new Translator();
+        this.socket = io();
 
         const catchedOnDocumentLoaded = Utils.catchVoidPromise(this.onDocumentLoaded.bind(this));
 
@@ -20,6 +24,8 @@ class Main
         {
             catchedOnDocumentLoaded();
         }
+
+        this.socket.connect();
     }
 
     public run (): void
