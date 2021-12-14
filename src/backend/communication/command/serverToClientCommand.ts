@@ -1,9 +1,9 @@
 export enum ServerToClientCommand
 {
-    Turn = 't',
-    Check = 'c',
     InvalidMove = 'i',
     Timeout = 'o',
+    Turn = 't',
+    Check = 'c',
     Won = 'w',
     Lost = 'l',
     Draw = 'd',
