@@ -1,4 +1,4 @@
-import * as TypedSocketIo from './typedSocketIo';
+import * as TypedSocketIo from './dependency/typedSocketIo';
 import { Chessboard } from 'cm-chessboard';
 import { io } from './dependency/socketIoClient';
 import { Translator } from './localisation/translator';
