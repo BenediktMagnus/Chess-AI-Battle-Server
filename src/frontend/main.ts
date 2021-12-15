@@ -1,5 +1,5 @@
 import * as TypedSocketIo from './typedSocketIo';
-import { Chessboard } from './dependency/chessboard';
+import { Chessboard } from 'cm-chessboard';
 import { io } from './dependency/socketIoClient';
 import { Translator } from './localisation/translator';
 import { Utils } from './utility/utils';

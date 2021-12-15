@@ -50,7 +50,7 @@
     "scripts": {
         "build": "npm run build:backend && npm run build:frontend",
         "build:backend": "./node_modules/.bin/tsc --build src/backend/tsconfig.json",
-        "build:frontend": "./node_modules/.bin/tsc --build src/frontend/tsconfig.json",
+        "build:frontend": "./node_modules/.bin/tsc --build src/frontend/tsconfig.json && npm run replaceChessboardImport",
         "clean": "rm -rf bin && rm -rf coverage",
         "coverage": "./node_modules/.bin/nyc npm run test",
         "coverage:text": "./node_modules/.bin/nyc --reporter=text npm run test",
@@ -59,6 +59,7 @@
         "lint:frontend": "cd src/frontend && ../../node_modules/.bin/eslint .",
         "prestart": "npm run build",
         "prepack": "npm run clean && ./node_modules/.bin/tsc -p src/backend/tsconfig.release.json && ./node_modules/.bin/tsc -p src/frontend/tsconfig.release.json",
+        "replaceChessboardImport": "sed -i \"s#from 'cm-chessboard'#from '/cm-chessboard/src/Chessboard.js'#\" ./bin/frontend/main.js",
         "start": "node bin/backend/main.js",
         "test": "./node_modules/.bin/mocha -r ts-node/register/transpile-only 'tests/**/*.ts'"
     },
