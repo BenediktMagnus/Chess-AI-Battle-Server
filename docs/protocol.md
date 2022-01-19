@@ -51,7 +51,7 @@ Response: None
 
 **Turn**: \
 Command: t \
-Data: from (position), to (position), promotion (promotion) \
+Data: from (position), to (position), promotion (promotion, optional) \
 Description: Make a turn. \
 Response: InvalidMove, Timeout, Turn, Check, Won, Lost, Draw or Stalemate
 
@@ -71,13 +71,13 @@ Response: None
 
 **Turn**: \
 Command: t \
-Data: from (position), to (position), promotion (promotion) \
+Data: from (position), to (position), promotion (promotion, optional) \
 Description: A turn has been made, resulting in no special position. \
 Response: Turn
 
 **Check**: \
 Command: c \
-Data: from (position), to (position), promotion (promotion) \
+Data: from (position), to (position), promotion (promotion, optional) \
 Description: A turn has been made, resulting in a check for the player. \
 Response: Turn
 
@@ -89,20 +89,20 @@ Response: None
 
 **Lost**: \
 Command: l \
-Data: from (position), to (position), promotion (promotion) \
+Data: from (position), to (position), promotion (promotion, optional) \
 Description: A turn has been made, resulting in the player loosing the game. The game ended. \
 Response: None
 
 **Draw**: \
 Command: d \
-Data: from (position), to (position), promotion (promotion) \
+Data: from (position), to (position), promotion (promotion, optional) \
 Description: A turn has been made, resulting in a draw.  The game ended. \
 Note: The player that made the last turn will receive no data in this message. \
 Response: None
 
 **Stalemate**: \
 Command: s \
-Data: from (position), to (position), promotion (promotion) \
+Data: from (position), to (position), promotion (promotion, optional) \
 Description: A turn has been made, resulting in a stalemate. The game ended. \
 Note: The player that made the last turn will receive no data in this message. \
 Response: None
