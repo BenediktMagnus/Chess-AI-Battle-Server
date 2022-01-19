@@ -4,18 +4,18 @@ Documentation of the message system used for communcation between the server and
 
 ## Definitions
 
-Server: The server that is running the game.
-Player: A player in the game, i.e. a client that is connected to the server.
+Server: The server that is running the game. \
+Player: A player in the game, i.e. a client that is connected to the server. \
 Segment: TCP/IP segment.
 
 ### Data types
 
-Char: A single ASCII character.
-String: A sequence of multiple chars.
-Column: One of the following chars: 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
-Row: One of the following chars: '1', '2', '3', '4', '5', '6', '7', '8'
-Position: Column and field, concenated with no separator, e.g. 'a1'
-Promotion: One of the following chars: 'b' (bishop), 'n' (knight), 'q' (queen), 'r' (rook)
+Char: A single ASCII character. \
+String: A sequence of multiple chars. \
+Column: One of the following chars: 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' \
+Row: One of the following chars: '1', '2', '3', '4', '5', '6', '7', '8' \
+Position: Column and field, concenated with no separator, e.g. 'a1' \
+Promotion: One of the following chars: 'b' (bishop), 'n' (knight), 'q' (queen), 'r' (rook) \
 Colour: One of the following chars: 'b' (black), 'w' (white)
 
 ## Connection
