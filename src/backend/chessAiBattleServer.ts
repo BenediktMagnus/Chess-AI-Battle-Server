@@ -6,7 +6,7 @@ import { ViewerHandler } from './communication/viewerHandler';
 
 const httpPort = 8032;
 const tcpPort = 2409;
-const maxTurnTimeMs = 1000;
+const maxTurnTimeMs = 200;
 const rounds = 100;
 
 export class ChessAiBattleServer
