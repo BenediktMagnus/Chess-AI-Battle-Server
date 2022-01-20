@@ -1,7 +1,7 @@
 import { PlayerStatistic } from "./playerStatistic";
 
-export type Ping = (pong: Pong) => void;
-export type Pong = () => void;
-
-export type Init = (reply: InitReply) => void;
-export type InitReply = (board: string, rounds: number, playerStatistics: PlayerStatistic[]) => void;
+export type Register = () => void;
+export type Initiate = (board: string, rounds: number, playerStatistics: PlayerStatistic[]) => void;
+export type Move = (move: string) => void;
+export type StartNextGame = (statistics: PlayerStatistic[]) => void;
+export type End = () => void;

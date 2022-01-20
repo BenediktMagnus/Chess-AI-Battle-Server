@@ -1,4 +1,3 @@
-import * as EventFunctionDefinitions from '../../shared/eventFunctionDefinitions';
 import * as TypedSocketIo from '../server/typedSocketIo';
 import { Game } from '../game/game';
 import { PlayerScore } from '../statistic/playerScore';
@@ -22,6 +21,10 @@ export class ViewerHandler
 
         this.viewers = new Set();
 
+        this.statistician.onMove.addEventListener(this.onMove);
+        this.statistician.onNewGame.addEventListener(this.onNewGame);
+        this.statistician.onEnd.addEventListener(this.onEnd);
+
         this.server.socketIo.on('connection', this.onConnection);
     }
 
@@ -39,14 +42,14 @@ export class ViewerHandler
 
     private onConnection = (socket: TypedSocketIo.Socket): void =>
     {
-        socket.on('init', this.onInit.bind(this));
+        socket.on('register', this.onInit.bind(this, socket));
     };
 
-    private onInit (reply: EventFunctionDefinitions.InitReply): void
+    private onInit (socket: TypedSocketIo.Socket): void
     {
         const statistics = this.convertScoresToStatistics(this.statistician.playerScores);
 
-        reply(this.game.board, this.statistician.rounds, statistics);
+        socket.emit('initiate', this.game.board, this.statistician.rounds, statistics);
     }
 
     private convertScoresToStatistics (scores: ReadonlyArray<Readonly<PlayerScore>>): PlayerStatistic[]
@@ -69,4 +72,21 @@ export class ViewerHandler
 
         return statistics;
     }
+
+    private onMove = (move: string): void =>
+    {
+        this.server.socketIo.emit('move', move);
+    };
+
+    private onNewGame = (): void =>
+    {
+        const statistics = this.convertScoresToStatistics(this.statistician.playerScores);
+
+        this.server.socketIo.emit('startNextGame', statistics);
+    };
+
+    private onEnd = (): void =>
+    {
+        this.server.socketIo.emit('end');
+    };
 }
