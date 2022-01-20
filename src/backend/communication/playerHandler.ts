@@ -186,16 +186,19 @@ export class PlayerHandler
         {
             this.roundsDone++;
             this.game.reset();
-            this.statistician.recordNewGame();
 
             if (this.roundsDone >= this.maxRounds)
             {
+                this.statistician.recordEnd();
+
                 const endMessage = new Messages.EndMessage();
                 this.sendMessage(player, endMessage);
                 this.sendMessage(otherPlayer, endMessage);
             }
             else
             {
+                this.statistician.recordNewGame();
+
                 // Switch the colours and start the next round.
 
                 const playerColour = player.colour;

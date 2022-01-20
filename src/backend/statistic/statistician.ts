@@ -1,3 +1,4 @@
+import EventHandler from "../utility/eventHandler";
 import { Player } from "../game/player";
 import { PlayerList } from "../game/playerList";
 import { PlayerScore } from "./playerScore";
@@ -7,6 +8,14 @@ export class Statistician
     private players: PlayerList;
     private scores: Map<Player, PlayerScore>;
     private moves: string[][];
+
+    // TODO: Der Statistiker muss über Spieleränderungen, neue Züge und neue Runden informieren.
+
+    public readonly onPlayerAdd: EventHandler<(player: Player) => void>;
+    public readonly onPlayerRemove: EventHandler<(player: Player) => void>;
+    public readonly onMove: EventHandler<(move: string) => void>;
+    public readonly onNewGame: EventHandler<() => void>;
+    public readonly onEnd: EventHandler<() => void>;
 
     /** The number of rounds done. */
     public get rounds (): number
@@ -29,28 +38,42 @@ export class Statistician
         this.players = new PlayerList();
         this.scores = new Map();
         this.moves = [];
+
+        this.onPlayerAdd = new EventHandler();
+        this.onPlayerRemove = new EventHandler();
+        this.onMove = new EventHandler();
+        this.onNewGame = new EventHandler();
+        this.onEnd = new EventHandler();
     }
 
     public addPlayer (player: Player): void
     {
         this.scores.set(player, new PlayerScore(player));
         this.players.add(player);
+
+        this.onPlayerAdd.dispatchEvent(player);
     }
 
     public removePlayer (player: Player): void
     {
         this.players.remove(player);
         this.scores.delete(player);
+
+        this.onPlayerRemove.dispatchEvent(player);
     }
 
     public recordMove (move: string): void
     {
         this.moves[this.moves.length - 1].push(move);
+
+        this.onMove.dispatchEvent(move);
     }
 
     public recordNewGame (): void
     {
         this.moves.push([]);
+
+        this.onNewGame.dispatchEvent();
     }
 
     public recordCheck (player: Player): void
@@ -103,5 +126,10 @@ export class Statistician
                 otherPlayerScore.losses += 1;
             }
         }
+    }
+
+    public recordEnd (): void
+    {
+        this.onEnd.dispatchEvent();
     }
 }
