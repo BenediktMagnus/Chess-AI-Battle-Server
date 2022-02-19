@@ -103,6 +103,9 @@ export class Server
     {
         socket.setEncoding('utf8');
 
+        socket.on('close', this.onTcpDisconnection.bind(this, socket));
+        socket.on('data', this.onTcpReceive.bind(this, socket));
+
         this.onConnect.dispatchEvent(socket);
     }
 
@@ -153,8 +156,6 @@ export class Server
     public start (): void
     {
         this.tcp.on('connection', this.onTcpConnection.bind(this));
-        this.tcp.on('close', this.onTcpDisconnection.bind(this));
-        this.tcp.on('data', this.onTcpReceive.bind(this));
         this.tcp.on('error', this.onTcpError.bind(this));
 
         this.tcp.listen(this.tcpPort);
