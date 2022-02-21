@@ -9,7 +9,8 @@ export class Statistician
     private scores: Map<Player, PlayerScore>;
     private moves: string[][];
 
-    // TODO: Der Statistiker muss über Spieleränderungen, neue Züge und neue Runden informieren.
+    // TODO: The statistician must inform about player (name) changes.
+    // TODO: The statistician must inform about checks (or statistic changes).
 
     public readonly onPlayerAdd: EventHandler<(player: Player) => void>;
     public readonly onPlayerRemove: EventHandler<(player: Player) => void>;

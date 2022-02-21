@@ -24,6 +24,7 @@ export class ViewerHandler
         this.statistician.onMove.addEventListener(this.onMove);
         this.statistician.onNewGame.addEventListener(this.onNewGame);
         this.statistician.onEnd.addEventListener(this.onEnd);
+        // TODO: Should we listen to player add/remove events?
 
         this.server.socketIo.on('connection', this.onConnection);
     }
