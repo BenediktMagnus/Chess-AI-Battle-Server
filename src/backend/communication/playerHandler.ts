@@ -74,6 +74,7 @@ export class PlayerHandler
         const player = new Player(socket, this.players.count + 1);
 
         this.players.add(player);
+        this.statistician.addPlayer(player);
 
         const otherPlayer = this.players.getOther(player);
 
