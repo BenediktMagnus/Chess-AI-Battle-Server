@@ -56,7 +56,7 @@ class Main
             document.getElementById('board'),
             {
                 position: 'start',
-                animationDuration: 20,
+                animationDuration: 100,
                 sprite: {
                     url: '/cm-chessboard/assets/images/chessboard-sprite-staunty.svg',
                 },
