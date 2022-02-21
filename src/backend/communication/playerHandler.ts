@@ -161,6 +161,8 @@ export class PlayerHandler
             return;
         }
 
+        let moveWasSuccessful = true;
+
         const neededTurnTime = player.stopWatchTime - Date.now();
         const isTimeout = neededTurnTime > this.maxTurnTimeMs;
         if (isTimeout)
@@ -179,10 +181,10 @@ export class PlayerHandler
         }
         else
         {
-            this.doMove(player, otherPlayer, moveData);
+            moveWasSuccessful = this.doMove(player, otherPlayer, moveData);
         }
 
-        if (isTimeout || ((this.game.state !== GameState.Running) && (this.game.state !== GameState.Check)))
+        if (isTimeout || !moveWasSuccessful || ((this.game.state !== GameState.Running) && (this.game.state !== GameState.Check)))
         {
             this.roundsDone++;
             this.game.reset();
@@ -223,7 +225,10 @@ export class PlayerHandler
         }
     }
 
-    private doMove (player: Player, otherPlayer: Player, moveData: string): void
+    /**
+     * @returns True if the move was successful, false otherwise (e.g. an illegal move).
+     */
+    private doMove (player: Player, otherPlayer: Player, moveData: string): boolean
     {
         this.statistician.recordMove(moveData);
 
@@ -295,6 +300,8 @@ export class PlayerHandler
             }
 
             otherPlayer.stopWatchTime = Date.now();
+
+            return true;
         }
         else
         {
@@ -307,6 +314,8 @@ export class PlayerHandler
 
             const wonMessage = new Messages.WonMessage();
             this.sendMessage(otherPlayer, wonMessage);
+
+            return false;
         }
     }
 
