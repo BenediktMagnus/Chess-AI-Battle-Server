@@ -310,6 +310,8 @@ export class PlayerHandler
                 `Player "${player.name}" (${player.colour}) tried to move with the invalid move ${from}-${to} (board: ${this.game.board}).`
             );
 
+            this.statistician.recordWin(otherPlayer);
+
             const invalidMoveMessage = new Messages.InvalidMoveMessage();
             this.sendMessage(player, invalidMoveMessage);
 
