@@ -151,6 +151,10 @@ declare module 'cm-chessboard'
         public getPiece (square: Square): PIECE;
         public movePiece (squareFrom: Square, squareTo: Square, animated?: boolean): Promise<void>;
 
+        /**
+         * @param fen The FEN string, special values are "start" to set the chess start position and "empty" to set an empty board.
+         * @param animated When set to false, the new position will be shown instantly.
+         */
         public setPosition (fen: string, animated?: boolean): Promise<void>;
         public getPosition (): string;
 
