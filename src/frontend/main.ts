@@ -2,17 +2,23 @@ import * as TypedSocketIo from './dependency/typedSocketIo';
 import { Chessboard } from 'cm-chessboard';
 import { io } from './dependency/socketIoClient';
 import { Translator } from './localisation/translator';
+import { Ui } from './ui/ui';
 import { Utils } from './utility/utils';
 
 class Main
 {
     private translator: Translator;
     private socket: TypedSocketIo.Socket;
+    private ui: Ui|null;
+    private chessboard: Chessboard|null;
 
     constructor ()
     {
         this.translator = new Translator();
         this.socket = io();
+
+        this.ui = null;
+        this.chessboard = null;
 
         const catchedOnDocumentLoaded = Utils.catchVoidPromise(this.onDocumentLoaded.bind(this));
 
@@ -38,7 +44,9 @@ class Main
     {
         await this.translator.run();
 
-        new Chessboard(
+        this.ui = new Ui();
+
+        this.chessboard = new Chessboard(
             document.getElementById('board'),
             {
                 position: 'start',
