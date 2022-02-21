@@ -17,6 +17,8 @@ class Main
         this.translator = new Translator();
         this.socket = io();
 
+        this.socket.connect();
+
         this.ui = null;
         this.chessboard = null;
 
@@ -31,8 +33,6 @@ class Main
         {
             catchedOnDocumentLoaded();
         }
-
-        this.socket.connect();
     }
 
     public run (): void
