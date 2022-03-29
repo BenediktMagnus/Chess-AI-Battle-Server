@@ -326,6 +326,6 @@ export class PlayerHandler
     {
         const messageString = message.compose();
 
-        player.socket.write(messageString);
+        player.socket.write(messageString + '\n');
     }
 }
