@@ -1,5 +1,5 @@
 import { Chess, ChessInstance, PieceType, Square as PositionNotation } from 'chess.js';
-import { Colour } from '../game/colour';
+import { Colour } from './colour';
 import { GameState } from './gameState';
 import { MoveResult } from './moveResult';
 import { Player } from './player';

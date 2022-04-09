@@ -84,9 +84,6 @@ export class Ui
         }
 
         this.playersStatisticCells = playersStatisticCells as PlayerStatisticsCells[];
-
-
-
     }
 
     public setRounds (rounds: number): void

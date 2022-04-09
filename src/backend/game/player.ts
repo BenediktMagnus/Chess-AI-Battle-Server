@@ -1,4 +1,4 @@
-import { Colour } from '../game/colour';
+import { Colour } from './colour';
 import net from 'net';
 
 export class Player
