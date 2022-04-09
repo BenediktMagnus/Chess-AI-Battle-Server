@@ -2,6 +2,10 @@
     --element-padding: 0.75rem;
     --header-size: 3rem;
 
+    --colour-player-name-font-size: 2em;
+
+    --board-max-width: calc(100vh - var(--header-size) - var(--colour-player-name-font-size) * 2 - var(--element-padding) * 6);
+
     font-size: calc((1.2vh + 1.2vw) / 2);
 }
 
@@ -29,6 +33,9 @@ header, main, footer {
 
 header > h1 {
     height: 1em;
+    width: 100%;
+
+    text-align: center;
     font-size: var(--header-size);
 }
 
@@ -42,16 +49,21 @@ main > section {
     flex-shrink: 1;
 }
 
-main > section:first-child {
-    float: left;
-}
+.colourPlayerName {
+    display: block;
 
-main > section:last-child {
-    float: right;
+    height: 1em;
+    max-width: var(--board-max-width);
+
+    padding: calc(var(--element-padding) / 2);
+
+    text-align: center;
+    line-height: 1em;
+    font-size: var(--colour-player-name-font-size);
 }
 
 .board {
-    max-width: calc(100vh - var(--header-size) - var(--element-padding) * 4);
+    max-width: var(--board-max-width);
 }
 
 .statistics {
@@ -60,6 +72,14 @@ main > section:last-child {
     padding: 0 5%;
 
     text-align: right;
+}
+
+.statistics > section:first-child {
+    float: left;
+}
+
+.statistics > section:last-child {
+    float: right;
 }
 
 .statistics > h2 {

@@ -55,12 +55,13 @@ export class ViewerHandler
 
     private convertScoresToStatistics (scores: ReadonlyArray<Readonly<PlayerScore>>): PlayerStatistic[]
     {
-        const statistics = [];
+        const statistics: PlayerStatistic[] = [];
 
         for (const score of scores)
         {
             const statistic = {
                 playerName: score.player.name,
+                currentColour: score.player.colour,
                 wins: score.wins,
                 losses: score.losses,
                 stalemates: score.stalemates,

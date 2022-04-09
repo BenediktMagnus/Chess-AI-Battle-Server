@@ -1,9 +1,11 @@
+import { Colour } from "../game/colour";
 import { Player } from "../game/player";
 import { PlayerStatistic } from "../../shared/playerStatistic";
 
 export class PlayerScore implements Omit<PlayerStatistic, 'playerName'>
 {
     public player: Player;
+    public currentColour: Colour;
     public wins: number;
     public losses: number;
     public stalemates: number;
@@ -13,6 +15,7 @@ export class PlayerScore implements Omit<PlayerStatistic, 'playerName'>
     constructor (player: Player)
     {
         this.player = player;
+        this.currentColour = player.colour;
 
         this.wins = 0;
         this.losses = 0;

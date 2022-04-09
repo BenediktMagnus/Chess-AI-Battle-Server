@@ -1,3 +1,4 @@
+import { Colour } from './colour';
 import type { PlayerStatistic } from '../../shared/playerStatistic';
 
 type PlayerStatisticKeys = keyof PlayerStatistic;
@@ -16,6 +17,8 @@ export class Ui
     private rounds: number;
 
     private roundsSpan: HTMLSpanElement;
+    private blackNameSpan: HTMLSpanElement;
+    private whiteNameSpan: HTMLSpanElement;
     private playersStatisticCells: PlayerStatisticsCells[];
 
     constructor ()
@@ -38,6 +41,17 @@ export class Ui
         if (player2NameTableCell === null)
         {
             throw new Error('Could not find element with id "namePlayer2".');
+        }
+
+        this.blackNameSpan = document.getElementById('blackPlayerName') as HTMLSpanElement;
+        if (this.blackNameSpan === null)
+        {
+            throw new Error('Could not find element with id "blackPlayerName".');
+        }
+        this.whiteNameSpan = document.getElementById('whitePlayerName') as HTMLSpanElement;
+        if (this.whiteNameSpan === null)
+        {
+            throw new Error('Could not find element with id "whitePlayerName".');
         }
 
         const playersStatisticCells: Partial<PlayerStatisticsCells>[] = [
@@ -99,6 +113,15 @@ export class Ui
             {
                 const playerStatisticCell = this.playersStatisticCells[i][playerStatisticKey];
                 playerStatisticCell.innerText = `${playerStatistic[playerStatisticKey]}`;
+            }
+
+            if (playerStatistic.currentColour == Colour.White)
+            {
+                this.whiteNameSpan.innerText = playerStatistic.playerName;
+            }
+            else if (playerStatistic.currentColour == Colour.Black)
+            {
+                this.blackNameSpan.innerText = playerStatistic.playerName;
             }
         }
     }

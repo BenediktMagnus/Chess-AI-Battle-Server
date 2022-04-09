@@ -1,6 +1,10 @@
+import type { Colour } from '../frontend/ui/colour';
+
 export interface PlayerStatistic
 {
     playerName: string;
+    /** The colour the player has currently (in the next game). */
+    currentColour: Colour;
     /** Times the player has won. */
     wins: number;
     /** Times the player has lost. */

@@ -70,6 +70,9 @@ export class Statistician
         this.onMove.dispatchEvent(move);
     }
 
+    /**
+     * NOTE: Must be called after the player colours for the coming round have been set.
+     */
     public recordNewGame (): void
     {
         this.moves.push([]);
