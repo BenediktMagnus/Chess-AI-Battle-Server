@@ -208,15 +208,6 @@ export class PlayerHandler
                 player.colour = otherPlayer.colour;
                 otherPlayer.colour = playerColour;
 
-                if (player.colour === Colour.White)
-                {
-                    player.stopWatchTime = Date.now();
-                }
-                else
-                {
-                    otherPlayer.stopWatchTime = Date.now();
-                }
-
                 const newGameMessagePlayer = new Messages.NewGameMessage(player.colour);
                 this.sendMessage(player, newGameMessagePlayer);
 
@@ -300,7 +291,6 @@ export class PlayerHandler
                     }
             }
 
-            otherPlayer.stopWatchTime = Date.now();
 
             return true;
         }
@@ -326,6 +316,7 @@ export class PlayerHandler
     {
         const messageString = message.compose();
 
+        player.stopWatchTime = Date.now();
         player.socket.write(messageString + '\n');
     }
 }
