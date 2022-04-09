@@ -164,11 +164,11 @@ export class PlayerHandler
 
         let moveWasSuccessful = true;
 
-        const neededTurnTime = player.stopWatchTime - Date.now();
+        const neededTurnTime = Date.now() - player.stopWatchTime;
         const isTimeout = neededTurnTime > this.maxTurnTimeMs;
         if (isTimeout)
         {
-            console.error(`Player "${player.name}" exceeded max turn time.`);
+            console.error(`Player "${player.name}" exceeded max turn time by ${neededTurnTime - this.maxTurnTimeMs}ms.`);
 
             this.statistician.recordWin(otherPlayer);
             // TODO: Should we record timeouts in the statistics?
@@ -207,15 +207,6 @@ export class PlayerHandler
                 const playerColour = player.colour;
                 player.colour = otherPlayer.colour;
                 otherPlayer.colour = playerColour;
-
-                if (player.colour === Colour.White)
-                {
-                    player.stopWatchTime = Date.now();
-                }
-                else
-                {
-                    otherPlayer.stopWatchTime = Date.now();
-                }
 
                 const newGameMessagePlayer = new Messages.NewGameMessage(player.colour);
                 this.sendMessage(player, newGameMessagePlayer);
@@ -300,7 +291,6 @@ export class PlayerHandler
                     }
             }
 
-            otherPlayer.stopWatchTime = Date.now();
 
             return true;
         }
@@ -326,6 +316,7 @@ export class PlayerHandler
     {
         const messageString = message.compose();
 
+        player.stopWatchTime = Date.now();
         player.socket.write(messageString + '\n');
     }
 }
