@@ -84,12 +84,13 @@ export class PlayerHandler
 
             this.roundsDone = 0;
             this.game.reset();
-            this.statistician.recordNewGame();
 
             const playerIsWhite = Math.random() < 0.5;
 
             player.colour = playerIsWhite ? Colour.White : Colour.Black;
             otherPlayer.colour = playerIsWhite ? Colour.Black : Colour.White;
+
+            this.statistician.recordNewGame();
 
             const newGameMessagePlayer = new Messages.NewGameMessage(player.colour);
             this.sendMessage(player, newGameMessagePlayer);
@@ -200,13 +201,13 @@ export class PlayerHandler
             }
             else
             {
-                this.statistician.recordNewGame();
-
                 // Switch the colours and start the next round.
 
                 const playerColour = player.colour;
                 player.colour = otherPlayer.colour;
                 otherPlayer.colour = playerColour;
+
+                this.statistician.recordNewGame();
 
                 const newGameMessagePlayer = new Messages.NewGameMessage(player.colour);
                 this.sendMessage(player, newGameMessagePlayer);
