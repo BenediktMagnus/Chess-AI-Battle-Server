@@ -164,7 +164,7 @@ export class PlayerHandler
 
         let moveWasSuccessful = true;
 
-        const neededTurnTime = player.stopWatchTime - Date.now();
+        const neededTurnTime = Date.now() - player.stopWatchTime;
         const isTimeout = neededTurnTime > this.maxTurnTimeMs;
         if (isTimeout)
         {
