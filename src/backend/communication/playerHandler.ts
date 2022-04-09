@@ -168,7 +168,7 @@ export class PlayerHandler
         const isTimeout = neededTurnTime > this.maxTurnTimeMs;
         if (isTimeout)
         {
-            console.error(`Player "${player.name}" exceeded max turn time.`);
+            console.error(`Player "${player.name}" exceeded max turn time by ${neededTurnTime - this.maxTurnTimeMs}ms`);
 
             this.statistician.recordWin(otherPlayer);
             // TODO: Should we record timeouts in the statistics?
