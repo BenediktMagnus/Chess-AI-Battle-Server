@@ -49,19 +49,19 @@
     "main": "bin/backend/main.js",
     "scripts": {
         "build": "npm run build:backend && npm run build:frontend",
-        "build:backend": "./node_modules/.bin/tsc --build src/backend/tsconfig.json",
-        "build:frontend": "./node_modules/.bin/tsc --build src/frontend/tsconfig.json && npm run replaceChessboardImport",
+        "build:backend": "tsc --build src/backend/tsconfig.json",
+        "build:frontend": "tsc --build src/frontend/tsconfig.json && npm run replaceChessboardImport",
         "clean": "rm -rf bin && rm -rf coverage",
-        "coverage": "./node_modules/.bin/nyc npm run test",
-        "coverage:text": "./node_modules/.bin/nyc --reporter=text npm run test",
+        "coverage": "nyc npm run test",
+        "coverage:text": "nyc --reporter=text npm run test",
         "lint": "npm run lint:backend && npm run lint:frontend",
-        "lint:backend": "cd src/backend && ../../node_modules/.bin/eslint .",
-        "lint:frontend": "cd src/frontend && ../../node_modules/.bin/eslint .",
+        "lint:backend": "cd src/backend && eslint .",
+        "lint:frontend": "cd src/frontend && eslint .",
         "prestart": "npm run build",
-        "prepack": "npm run clean && ./node_modules/.bin/tsc -p src/backend/tsconfig.release.json && ./node_modules/.bin/tsc -p src/frontend/tsconfig.release.json",
+        "prepack": "npm run clean && tsc -p src/backend/tsconfig.release.json && tsc -p src/frontend/tsconfig.release.json",
         "replaceChessboardImport": "sed -i \"s#from 'cm-chessboard'#from '/cm-chessboard/src/Chessboard.js'#\" ./bin/frontend/main.js",
         "start": "node bin/backend/main.js",
-        "test": "./node_modules/.bin/mocha -r ts-node/register/transpile-only 'tests/**/*.ts'"
+        "test": "mocha -r ts-node/register/transpile-only 'tests/**/*.ts'"
     },
     "private": true
 }
