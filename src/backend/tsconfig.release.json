@@ -1,7 +1,8 @@
 {
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
-		"sourceMap": false,
-        "incremental": false
+        "tsBuildInfoFile": null,
+        "incremental": false,
+		"sourceMap": false
 	}
 }
