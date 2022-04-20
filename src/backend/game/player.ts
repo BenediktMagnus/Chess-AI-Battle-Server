@@ -1,4 +1,4 @@
-import { Colour } from './colour';
+import { Colour } from '../../shared/colour';
 import net from 'net';
 
 export class Player

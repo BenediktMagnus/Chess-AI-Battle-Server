@@ -1,4 +1,4 @@
-import { Colour } from './colour';
+import { Colour } from '../../shared/colour';
 import type { PlayerStatistic } from '../../shared/playerStatistic';
 
 type PlayerStatisticKeys = keyof PlayerStatistic;

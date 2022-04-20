@@ -1,6 +1,6 @@
 import * as Messages from '../communication/messages/index';
 import { ClientToServerCommand } from '../communication/command/clientToServerCommand';
-import { Colour } from '../game/colour';
+import { Colour } from '../../shared/colour';
 import { Game } from '../game/game';
 import { GameState } from '../game/gameState';
 import { MoveResult } from '../game/moveResult';

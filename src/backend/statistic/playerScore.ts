@@ -1,4 +1,4 @@
-import { Colour } from "../game/colour";
+import { Colour } from "../../shared/colour";
 import { Player } from "../game/player";
 import { PlayerStatistic } from "../../shared/playerStatistic";
 

@@ -1,7 +1,7 @@
 import 'mocha';
 import * as mockito from 'ts-mockito';
 import { assert } from 'chai';
-import { Colour } from '../../../src/backend/game/colour';
+import { Colour } from '../../../src/shared/colour';
 import { Game } from '../../../src/backend/game/game';
 import { GameState } from '../../../src/backend/game/gameState';
 import { MoveResult } from '../../../src/backend/game/moveResult';

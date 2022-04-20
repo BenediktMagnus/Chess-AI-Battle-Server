@@ -1,4 +1,4 @@
-import type { Colour } from '../frontend/ui/colour';
+import type { Colour } from './colour';
 
 export interface PlayerStatistic
 {

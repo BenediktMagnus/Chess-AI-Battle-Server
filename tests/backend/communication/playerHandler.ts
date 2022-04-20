@@ -3,7 +3,7 @@ import * as mockito from 'ts-mockito';
 import * as TypedSocketIo from '../../../src/backend/server/typedSocketIo';
 import { assert } from 'chai';
 import { ClientToServerCommand } from '../../../src/backend/communication/command/clientToServerCommand';
-import { Colour } from '../../../src/backend/game/colour';
+import { Colour } from '../../../src/shared/colour';
 import EventHandler from '../../../src/backend/utility/eventHandler';
 import { Game } from '../../../src/backend/game/game';
 import net from 'net';
