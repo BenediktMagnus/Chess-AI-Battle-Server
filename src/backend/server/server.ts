@@ -71,8 +71,6 @@ export class Server
 
         // Serving of the cm-chessboard assets:
         this.express.use('/cm-chessboard/assets', express.static('./node_modules/cm-chessboard/assets'));
-        // Serving of the cm-chessboard sources:
-        this.express.use('/cm-chessboard/src', express.static('./node_modules/cm-chessboard/src/cm-chessboard'));
 
         this.httpPort = Server.defaultHttpPort;
 
