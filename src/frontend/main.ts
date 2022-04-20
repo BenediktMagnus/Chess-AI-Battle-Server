@@ -56,7 +56,7 @@ class Main
             document.getElementById('board'),
             {
                 position: 'start',
-                animationDuration: 100,
+                animationDuration: 67, // 67 ms is about 4 frames at 60 FPS.
                 sprite: {
                     url: '/cm-chessboard/assets/images/chessboard-sprite-staunty.svg',
                 },
