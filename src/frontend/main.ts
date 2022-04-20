@@ -1,6 +1,6 @@
-import * as TypedSocketIo from './dependency/typedSocketIo';
+import * as TypedSocketIo from './typings/typedSocketIo';
 import { Chessboard, PIECE as Piece, Square } from 'cm-chessboard';
-import { io } from './dependency/socketIoClient';
+import { io } from 'socket.io-client';
 import { PlayerStatistic } from '../shared/playerStatistic';
 import { Translator } from './localisation/translator';
 import { Ui } from './ui/ui';

@@ -5,8 +5,10 @@
 		"target": "es2021",
 		"moduleResolution": "node",
 
-		"outDir": "../../bin",
-        "tsBuildInfoFile": "../../bin/tsbuildinfo.frontend.json"
+        "noEmit": true,
+        "tsBuildInfoFile": "../../bin/tsbuildinfo.frontend.json",
+
+        "isolatedModules": true
 	},
 	"include": [
 		"./**/*.ts"
