@@ -1,7 +1,10 @@
 const esbuild = require('esbuild');
 
 config = {
-    entryPoints: ['src/frontend/main.ts', 'src/frontend/pages/adminPage.ts', 'src/frontend/pages/playPage.ts'],
+    entryPoints: [
+        'src/frontend/main.ts',
+        'src/frontend/pages/playPage.ts'
+    ],
     bundle: true,
     sourcemap: true,
     target: 'es2021',
