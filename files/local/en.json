@@ -1,4 +1,6 @@
 {
+    "adminPageTitle": "Chess AI Battle Server - Admin",
+    "adminPageHeaderTitle": "Chess AI Battle Server - Admin",
     "title": "Chess AI Battle Server",
     "headerTitle": "Chess AI Battle Server",
     "statisticsRounds": "Rounds:",

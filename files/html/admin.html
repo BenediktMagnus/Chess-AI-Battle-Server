@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title localId="adminPageTitle">Chess AI Battle Server - Admin Page</title>
+
+    <!-- Icon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" sizes="any">
+
+	<!-- Stylesheets -->
+	<link rel="stylesheet" type="text/css" href="/css/base.css">
+	<link rel="stylesheet" type="text/css" href="/css/admin.css">
+
+	<!-- Scripts -->
+	<script type="module" src="/scripts/pages/adminPage.js"></script>
+</head>
+<body>
+    <header>
+        <h1 localId="adminPageHeaderTitle"></h1>
+    </header>
+    <main>
+        <section>
+            <div>
+                <input id="settingManualMode" type="checkbox">
+                <label for="settingManualMode" localId="adminPageSettingManualMode"></label>
+            </div>
+            <div>
+                <input id="settingMinimalMode" type="checkbox">
+                <label for="settingMinimalMode" localId="adminPageSettingMinimalMode"></label>
+            </div>
+        </section>
+        <section>
+            <div>
+                <input id="settingStartAiOne" type="checkbox">
+                <label for="settingStartAiOne" localId="adminPageSettingStartAiOne"></label>
+            </div>
+            <div>
+                <input id="settingAiOneCommand" type="text">
+                <label for="settingAiOneCommand" localId="adminPageSettingAiOneCommand"></label>
+            </div>
+        </section>
+        <section>
+            <div>
+                <input id="settingStartAiTwo" type="checkbox">
+                <label for="settingStartAiTwo" localId="adminPageSettingStartAiTwo"></label>
+            </div>
+            <div>
+                <input id="settingAiTwoCommand" type="text">
+                <label for="settingAiTwoCommand" localId="adminPageSettingAiTwoCommand"></label>
+            </div>
+        </section>
+        <section>
+            <label for="settingNumberOfRounds" localId="adminPageSettingNumberOfRounds"></label>
+            <input id="settingNumberOfRounds" type="number">
+        </section>
+        <section>
+            <button id="actionNextRound" type="button" localId="adminPageActionNextRound">
+            <button id="actionStartAis" type="button" localId="adminPageActionStartAis">
+        </section>
+    </main>
+</body>
+</html>
