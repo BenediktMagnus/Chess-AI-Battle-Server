@@ -75,7 +75,7 @@ declare module 'cm-chessboard'
     export const FEN_START_POSITION = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
     export const FEN_EMPTY_POSITION = '8/8/8/8/8/8/8/8';
 
-    type Position = 'empty' | 'start';
+    type Position = 'empty' | 'start'; // TODO: FEN string is allowed, too!
     type BorderType = { class: string, slice: string };
     type MarkerType = MarkerTypeFrame | MarkerTypeSquare | MarkerTypeDot | MarkerTypeCircle;
 
@@ -121,16 +121,16 @@ declare module 'cm-chessboard'
 
     type MoveInputEventHandlerParameters = {
         chessboard: Chessboard,
-        type: INPUT_EVENT_TYPE,
+        type: INPUT_EVENT_TYPE.moveStart,
         square: Square,
     } | {
         chessboard: Chessboard,
-        type: INPUT_EVENT_TYPE,
+        type: INPUT_EVENT_TYPE.moveDone,
         squareFrom: Square,
         squareTo: Square,
     } | {
         chessboard: Chessboard,
-        type: INPUT_EVENT_TYPE,
+        type: INPUT_EVENT_TYPE.moveCanceled,
         reason: MOVE_CANCELED_REASON,
         squareFrom: Square,
         squareTo: Square | undefined,
