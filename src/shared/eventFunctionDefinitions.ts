@@ -5,3 +5,6 @@ export type Initiate = (board: string, rounds: number, playerStatistics: PlayerS
 export type Move = (move: string) => void;
 export type StartNextGame = (statistics: PlayerStatistic[]) => void;
 export type End = () => void;
+
+export type RegisterPlayer = () => void;
+export type Play = (command: string) => void; // TODO:Giv a better name...

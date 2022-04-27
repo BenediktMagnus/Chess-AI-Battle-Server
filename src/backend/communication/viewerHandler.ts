@@ -44,6 +44,9 @@ export class ViewerHandler
     private onConnection = (socket: TypedSocketIo.Socket): void =>
     {
         socket.on('register', this.onInit.bind(this, socket));
+        socket.on('registerPlayer', this.onRegisterPlayer.bind(this, socket));
+        socket.on('play', this.onPlay.bind(this, socket));
+        // TODO:Listen to disconnect for players.
     };
 
     private onInit (socket: TypedSocketIo.Socket): void
@@ -91,4 +94,14 @@ export class ViewerHandler
     {
         this.server.socketIo.emit('end');
     };
+
+    private onRegisterPlayer = (): void =>
+    {
+
+    }
+
+    private onPlay = (): void =>
+    {
+
+    }
 }
