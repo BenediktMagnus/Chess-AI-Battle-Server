@@ -1,4 +1,3 @@
-import { Colour } from '../../shared/colour';
 import type { PlayerStatistic } from '../../shared/playerStatistic';
 
 type PlayerStatisticKeys = keyof PlayerStatistic;
@@ -17,8 +16,8 @@ export class Ui
     private rounds: number;
 
     private roundsSpan: HTMLSpanElement;
-    private blackNameSpan: HTMLSpanElement;
-    private whiteNameSpan: HTMLSpanElement;
+    private playerOneName: HTMLSpanElement;
+    private playerTwoName: HTMLSpanElement;
     private playersStatisticCells: PlayerStatisticsCells[];
 
     constructor ()
@@ -43,15 +42,15 @@ export class Ui
             throw new Error('Could not find element with id "namePlayer2".');
         }
 
-        this.blackNameSpan = document.getElementById('blackPlayerName') as HTMLSpanElement;
-        if (this.blackNameSpan === null)
+        this.playerOneName = document.getElementById('playerOneName') as HTMLSpanElement;
+        if (this.playerOneName === null)
         {
-            throw new Error('Could not find element with id "blackPlayerName".');
+            throw new Error('Could not find element with id "playerOneName".');
         }
-        this.whiteNameSpan = document.getElementById('whitePlayerName') as HTMLSpanElement;
-        if (this.whiteNameSpan === null)
+        this.playerTwoName = document.getElementById('playerTwoName') as HTMLSpanElement;
+        if (this.playerTwoName === null)
         {
-            throw new Error('Could not find element with id "whitePlayerName".');
+            throw new Error('Could not find element with id "playerTwoName".');
         }
 
         const playersStatisticCells: Partial<PlayerStatisticsCells>[] = [
@@ -114,15 +113,9 @@ export class Ui
                 const playerStatisticCell = this.playersStatisticCells[i][playerStatisticKey];
                 playerStatisticCell.innerText = `${playerStatistic[playerStatisticKey]}`;
             }
-
-            if (playerStatistic.currentColour == Colour.White)
-            {
-                this.whiteNameSpan.innerText = playerStatistic.playerName;
-            }
-            else if (playerStatistic.currentColour == Colour.Black)
-            {
-                this.blackNameSpan.innerText = playerStatistic.playerName;
-            }
         }
+
+        this.playerOneName.innerText = playerStatistics[0].playerName;
+        this.playerTwoName.innerText = playerStatistics[1].playerName;
     }
 }

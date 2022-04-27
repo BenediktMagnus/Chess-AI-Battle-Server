@@ -1,5 +1,6 @@
 import * as TypedSocketIo from './typings/typedSocketIo';
-import { Chessboard, PIECE as Piece, Square } from 'cm-chessboard';
+import { Chessboard, COLOR as ChessboardColour, PIECE as Piece, Square } from 'cm-chessboard';
+import { Colour } from '../shared/colour';
 import { io } from 'socket.io-client';
 import { PlayerStatistic } from '../shared/playerStatistic';
 import { Translator } from './localisation/translator';
@@ -118,6 +119,19 @@ class Main
         this.ui.setStatistics(playerStatistics);
 
         await this.chessboard.setPosition('start');
+
+        switch (playerStatistics[0].currentColour)
+        {
+            case Colour.Black:
+                this.chessboard.setOrientation(ChessboardColour.black);
+                break;
+            case Colour.White:
+                this.chessboard.setOrientation(ChessboardColour.white);
+                break;
+            case Colour.None:
+                // Do nothing.
+                break;
+        }
     }
 
     private async onEnd (): Promise<void>
