@@ -14,4 +14,11 @@ export abstract class Utils
 
         return arrowFunction;
     }
+
+    public static async sleep (ms: number): Promise<void>
+    {
+        return new Promise(
+            resolve => setTimeout(resolve, ms)
+        );
+    }
 }
