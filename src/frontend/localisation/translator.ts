@@ -81,7 +81,15 @@ export class Translator
 
             if ((localId !== null) && (localId in this.translations))
             {
-                element.textContent = this.translations[localId];
+                switch (element.tagName)
+                {
+                    case 'BUTTON':
+                        (element as HTMLButtonElement).innerText = this.translations[localId];
+                        break;
+                    default:
+                        element.textContent = this.translations[localId];
+                        break;
+                }
             }
         }
     }
