@@ -95,13 +95,13 @@ export class ViewerHandler
         this.server.socketIo.emit('end');
     };
 
-    private onRegisterPlayer = (): void =>
+    private onRegisterPlayer (): void
     {
-
+        // TODO: Implement
     }
 
-    private onPlay = (): void =>
+    private onPlay (): void
     {
-
+        // TODO: Implement
     }
 }
