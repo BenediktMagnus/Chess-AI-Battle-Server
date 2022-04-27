@@ -1,0 +1,36 @@
+:root {
+    --element-padding: 0.75rem;
+    --header-size: 3rem;
+
+    font-size: calc((1.2vh + 1.2vw) / 2);
+}
+
+* {
+    margin: 0;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #000;
+
+    color: #FFF;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header, main, footer {
+    padding: var(--element-padding);
+}
+
+header > h1 {
+    height: 1em;
+    width: 100%;
+
+    text-align: center;
+    font-size: var(--header-size);
+}
