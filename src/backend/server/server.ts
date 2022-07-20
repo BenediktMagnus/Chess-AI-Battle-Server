@@ -102,9 +102,6 @@ export class Server
 
     private onTcpConnection (socket: net.Socket): void
     {
-        socket.setEncoding('utf8');
-        socket.setNoDelay(true);
-
         socket.on('close', this.onTcpDisconnection.bind(this, socket));
         socket.on('data', this.onTcpReceive.bind(this, socket));
 
