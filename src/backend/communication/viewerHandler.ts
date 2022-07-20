@@ -24,7 +24,6 @@ export class ViewerHandler
         this.statistician.onMove.addEventListener(this.onMove);
         this.statistician.onNewGame.addEventListener(this.onNewGame);
         this.statistician.onEnd.addEventListener(this.onEnd);
-        // TODO: Should we listen to player add/remove events?
 
         this.server.socketIo.on('connection', this.onConnection);
     }
@@ -44,9 +43,6 @@ export class ViewerHandler
     private onConnection = (socket: TypedSocketIo.Socket): void =>
     {
         socket.on('register', this.onInit.bind(this, socket));
-        socket.on('registerPlayer', this.onRegisterPlayer.bind(this, socket));
-        socket.on('play', this.onPlay.bind(this, socket));
-        // TODO:Listen to disconnect for players.
     };
 
     private onInit (socket: TypedSocketIo.Socket): void
@@ -94,14 +90,4 @@ export class ViewerHandler
     {
         this.server.socketIo.emit('end');
     };
-
-    private onRegisterPlayer (): void
-    {
-        // TODO: Implement
-    }
-
-    private onPlay (): void
-    {
-        // TODO: Implement
-    }
 }

@@ -63,9 +63,6 @@ class Main
                 },
             }
         );
-
-        this.socket.emit('register');
-        this.socket.emit('registerPlayer');
     }
 
     private async onInitiate (board: string): Promise<void>
