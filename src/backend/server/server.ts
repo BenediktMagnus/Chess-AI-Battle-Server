@@ -6,6 +6,7 @@ import EventHandler from '../utility/eventHandler';
 import express from 'express';
 import net from 'net';
 import { PlayerConnection } from './playerConnection/playerConnection';
+import { TcpPlayerConnection } from './playerConnection/tcpPlayerConnection';
 
 export class Server
 {
