@@ -6,6 +6,7 @@ import EventHandler from '../utility/eventHandler';
 import express from 'express';
 import net from 'net';
 import { PlayerConnection } from './playerConnection/playerConnection';
+import { SocketIoPlayerConnection } from './playerConnection/socketIoPlayerConnection';
 import { TcpPlayerConnection } from './playerConnection/tcpPlayerConnection';
 
 export class Server
@@ -17,7 +18,7 @@ export class Server
     private readonly http: http.Server;
 
     private readonly io: TypedSocketIo.Server;
-
+    private readonly ioPlayerNamespace: TypedSocketIo.HumanPlayerNamespace;
     private readonly tcp: net.Server;
 
     private socketToDataBuffer: Map<net.Socket, string>;
@@ -80,6 +81,8 @@ export class Server
         this.http = new http.Server(this.express);
 
         this.io = new TypedSocketIo.Server(this.http);
+
+        this.ioPlayerNamespace = this.io.of(Constants.humanPlayerNamespace);
 
         this.tcpPort = Server.defaultTcpPort;
 
@@ -152,10 +155,42 @@ export class Server
         this.onPlayerError.dispatchEvent(error);
     }
 
+    private onIoPlayerConnection (socket: TypedSocketIo.HumanPlayerSocket): void
+    {
+        socket.on('disconnect', this.onIoPlayerDisconnection.bind(this, socket));
+        socket.on('message', this.onIoPlayerMessage.bind(this, socket));
+
+        this.onPlayerConnect.dispatchEvent(playerConnection);
+    }
+
+    private onIoPlayerDisconnection (socket: TypedSocketIo.HumanPlayerSocket): void
+    {
+        this.onPlayerDisconnect.dispatchEvent(playerConnection);
+    }
+
+    private onIoPlayerMessage (socket: TypedSocketIo.HumanPlayerSocket, message: string): void
+    {
+        const line = message.trimEnd(); // Remove leading line break.
+
+        // TODO: This is not fully protocol compliant as there could be multiple lines in a message.
+
+        this.onPlayerMessage.dispatchEvent(playerConnection, line);
+    }
+
+    private onIoPlayerError (error: Error): void
+    {
+        console.error(error);
+
+        this.onPlayerError.dispatchEvent(error);
+    }
+
     public start (): void
     {
         this.tcp.on('connection', this.onTcpConnection.bind(this));
         this.tcp.on('error', this.onTcpError.bind(this));
+
+        this.ioPlayerNamespace.on('connection', this.onIoPlayerConnection.bind(this));
+        this.ioPlayerNamespace.on('error', this.onIoPlayerError.bind(this));
 
         this.tcp.listen(this.tcpPort);
 
