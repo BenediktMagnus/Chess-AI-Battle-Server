@@ -1,9 +1,11 @@
+import * as Constants from '../../shared/constants';
 import * as http from 'http';
 import * as TypedSocketIo from './typedSocketIo';
 import compression from 'compression';
 import EventHandler from '../utility/eventHandler';
 import express from 'express';
 import net from 'net';
+import { PlayerConnection } from './playerConnection/playerConnection';
 
 export class Server
 {
@@ -22,13 +24,13 @@ export class Server
     public httpPort: number;
     public tcpPort: number;
 
-    /** Fired when a new socket connected. */
-    public readonly onConnect: EventHandler<(socket: net.Socket) => void>;
-    /** Fired when a socket disconnected. */
-    public readonly onDisconnect: EventHandler<(socket: net.Socket) => void>;
-    /** Fired when a socket received a message (every line of data is a message). */
-    public readonly onMessage: EventHandler<(socket: net.Socket, message: string) => void>;
-    public readonly onError: EventHandler<(error: Error) => void>;
+    /** Fired when a new playerConnection was established. */
+    public readonly onPlayerConnect: EventHandler<(playerConnection: PlayerConnection) => void>;
+    /** Fired when a playerConnection disconnected. */
+    public readonly onPlayerDisconnect: EventHandler<(playerConnection: PlayerConnection) => void>;
+    /** Fired when a playerConnection received a message (every line of data is a message). */
+    public readonly onPlayerMessage: EventHandler<(playerConnection: PlayerConnection, message: string) => void>;
+    public readonly onPlayerError: EventHandler<(error: Error) => void>;
 
     constructor ()
     {
@@ -86,10 +88,10 @@ export class Server
 
         this.socketToDataBuffer = new Map();
 
-        this.onConnect = new EventHandler();
-        this.onDisconnect = new EventHandler();
-        this.onMessage = new EventHandler();
-        this.onError = new EventHandler();
+        this.onPlayerConnect = new EventHandler();
+        this.onPlayerDisconnect = new EventHandler();
+        this.onPlayerMessage = new EventHandler();
+        this.onPlayerError = new EventHandler();
     }
 
     public get socketIo (): TypedSocketIo.Server
@@ -105,14 +107,14 @@ export class Server
         socket.on('close', this.onTcpDisconnection.bind(this, socket));
         socket.on('data', this.onTcpReceive.bind(this, socket));
 
-        this.onConnect.dispatchEvent(socket);
+        this.onPlayerConnect.dispatchEvent(playerConnection);
     }
 
     private onTcpDisconnection (socket: net.Socket): void
     {
         this.socketToDataBuffer.delete(socket);
 
-        this.onDisconnect.dispatchEvent(socket);
+        this.onPlayerDisconnect.dispatchEvent(playerConnection);
     }
 
     /**
@@ -130,7 +132,7 @@ export class Server
             const line = remainingData.substring(0, lineEndingIndex);
             remainingData = remainingData.substring(lineEndingIndex + 1);
 
-            this.onMessage.dispatchEvent(socket, line);
+            this.onPlayerMessage.dispatchEvent(playerConnection, line);
 
             lineEndingIndex = remainingData.indexOf('\n');
         }
@@ -149,7 +151,7 @@ export class Server
     {
         console.error(error);
 
-        this.onError.dispatchEvent(error);
+        this.onPlayerError.dispatchEvent(error);
     }
 
     public start (): void

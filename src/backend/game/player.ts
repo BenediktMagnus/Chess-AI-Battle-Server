@@ -1,18 +1,18 @@
 import { Colour } from '../../shared/colour';
-import net from 'net';
+import { PlayerConnection } from '../server/playerConnection/playerConnection';
 
 export class Player
 {
     public name: string;
     public colour: Colour;
-    public socket: net.Socket;
+    public connection: PlayerConnection;
     public stopWatchTime: number;
 
-    constructor (socket: net.Socket, clientNumber: number)
+    constructor (connection: PlayerConnection, clientNumber: number)
     {
         this.name = `Player ${clientNumber}`;
         this.colour = Colour.None;
-        this.socket = socket;
+        this.connection = connection;
         this.stopWatchTime = 0;
     }
 }

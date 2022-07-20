@@ -1,5 +1,5 @@
-import net from 'net';
 import { Player } from './player';
+import { PlayerConnection } from '../server/playerConnection/playerConnection';
 
 export class PlayerList
 {
@@ -44,13 +44,13 @@ export class PlayerList
     }
 
     /**
-     * Look for the given socket and remove the corresponding player.
-     * Do nothing if the socket is not found.
-     * @param socket The socket to look for.
+     * Look for the given playerConnection and remove the corresponding player.
+     * Do nothing if the playerConnection is not found.
+     * @param playerConnection The playerConnection to look for.
      */
-    public removeBySocket (socket: net.Socket): void
+    public removeByConnection (playerConnection: PlayerConnection): void
     {
-        const player = this.getBySocket(socket);
+        const player = this.getByConnection(playerConnection);
 
         if (player !== null)
         {
@@ -64,15 +64,15 @@ export class PlayerList
     }
 
     /**
-     * Look for the given socket and return the corresponding player.
-     * @param socket The socket to search for.
+     * Look for the given playerConnection and return the corresponding player.
+     * @param playerConnection The playerConnection to search for.
      * @returns The player if found, otherwise null.
      */
-    public getBySocket (socket: net.Socket): Player|null
+    public getByConnection (playerConnection: PlayerConnection): Player|null
     {
         for (const player of this.players)
         {
-            if (player.socket === socket)
+            if (player.connection === playerConnection)
             {
                 return player;
             }

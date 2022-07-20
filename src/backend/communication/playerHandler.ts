@@ -4,8 +4,8 @@ import { Colour } from '../../shared/colour';
 import { Game } from '../game/game';
 import { GameState } from '../game/gameState';
 import { MoveResult } from '../game/moveResult';
-import net from 'net';
 import { Player } from '../game/player';
+import { PlayerConnection } from '../server/playerConnection/playerConnection';
 import { PlayerList } from '../game/playerList';
 import { Server } from '../server/server';
 import { Statistician } from '../statistic/statistician';
@@ -37,9 +37,9 @@ export class PlayerHandler
 
         this.server = server;
 
-        this.server.onConnect.addEventListener(this.onConnect);
-        this.server.onDisconnect.addEventListener(this.onDisconnect);
-        this.server.onMessage.addEventListener(this.onMessage);
+        this.server.onPlayerConnect.addEventListener(this.onConnect);
+        this.server.onPlayerDisconnect.addEventListener(this.onDisconnect);
+        this.server.onPlayerMessage.addEventListener(this.onMessage);
     }
 
     /** End the player handling. */
@@ -47,13 +47,13 @@ export class PlayerHandler
     {
         // This is done by removing all event listeners from the server and disconnecting all players.
 
-        this.server.onConnect.removeEventListener(this.onConnect);
-        this.server.onDisconnect.removeEventListener(this.onDisconnect);
-        this.server.onMessage.removeEventListener(this.onMessage);
+        this.server.onPlayerConnect.removeEventListener(this.onConnect);
+        this.server.onPlayerDisconnect.removeEventListener(this.onDisconnect);
+        this.server.onPlayerMessage.removeEventListener(this.onMessage);
 
         for (const player of this.players.getAll())
         {
-            player.socket.end();
+            player.connection.end();
 
             this.players.remove(player);
         }
@@ -62,16 +62,16 @@ export class PlayerHandler
     /**
      * Fired when a new player has connected..
      */
-    private onConnect = (socket: net.Socket): void =>
+    private onConnect = (playerConnection: PlayerConnection): void =>
     {
         if (this.players.count >= 2)
         {
-            socket.destroy();
+            playerConnection.close();
 
             return;
         }
 
-        const player = new Player(socket, this.players.count + 1);
+        const player = new Player(playerConnection, this.players.count + 1);
 
         this.players.add(player);
         this.statistician.addPlayer(player);
@@ -103,17 +103,17 @@ export class PlayerHandler
     /**
      * Fired when a player connection is closed.
      */
-    private onDisconnect = (socket: net.Socket): void =>
+    private onDisconnect = (playerConnection: PlayerConnection): void =>
     {
-        this.players.removeBySocket(socket);
+        this.players.removeByConnection(playerConnection);
     };
 
     /**
      * Fired when a message from a player is received.
      */
-    private onMessage = (socket: net.Socket, message: string): void =>
+    private onMessage = (playerConnection: PlayerConnection, message: string): void =>
     {
-        const player = this.players.getBySocket(socket);
+        const player = this.players.getByConnection(playerConnection);
 
         if (player === null)
         {
@@ -318,6 +318,6 @@ export class PlayerHandler
         const messageString = message.compose();
 
         player.stopWatchTime = Date.now();
-        player.socket.write(messageString + '\n');
+        player.connection.write(messageString + '\n');
     }
 }
