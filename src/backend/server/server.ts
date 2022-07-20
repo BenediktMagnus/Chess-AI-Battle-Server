@@ -21,6 +21,8 @@ export class Server
     private readonly ioPlayerNamespace: TypedSocketIo.HumanPlayerNamespace;
     private readonly tcp: net.Server;
 
+    private socketToPlayerConnection: Map<net.Socket|TypedSocketIo.HumanPlayerSocket, PlayerConnection>;
+
     private socketToDataBuffer: Map<net.Socket, string>;
 
     public httpPort: number;
@@ -90,6 +92,8 @@ export class Server
 
         this.tcp.maxConnections = 2; // A chess server only needs two players.
 
+        this.socketToPlayerConnection = new Map();
+
         this.socketToDataBuffer = new Map();
 
         this.onPlayerConnect = new EventHandler();
@@ -108,6 +112,10 @@ export class Server
         socket.on('close', this.onTcpDisconnection.bind(this, socket));
         socket.on('data', this.onTcpReceive.bind(this, socket));
 
+        const playerConnection = new TcpPlayerConnection(socket);
+
+        this.socketToPlayerConnection.set(socket, playerConnection);
+
         this.onPlayerConnect.dispatchEvent(playerConnection);
     }
 
@@ -115,7 +123,17 @@ export class Server
     {
         this.socketToDataBuffer.delete(socket);
 
+        const playerConnection = this.socketToPlayerConnection.get(socket);
+        if (playerConnection === undefined)
+        {
+            this.onTcpError(new Error('No PlayerConnection found for TCP socket while disconnecting.'));
+
+            return;
+        }
+
         this.onPlayerDisconnect.dispatchEvent(playerConnection);
+
+        this.socketToPlayerConnection.delete(socket);
     }
 
     /**
@@ -127,6 +145,14 @@ export class Server
         let remainingData = (this.socketToDataBuffer.get(socket) ?? '') + data;
 
         let lineEndingIndex = remainingData.indexOf('\n');
+
+        const playerConnection = this.socketToPlayerConnection.get(socket);
+        if (playerConnection === undefined)
+        {
+            this.onTcpError(new Error('No PlayerConnection found for TCP socket while receiving.'));
+
+            return;
+        }
 
         while (lineEndingIndex !== -1)
         {
