@@ -1,4 +1,4 @@
-import { ServerToClientCommand } from "../command/serverToClientCommand";
+import { ServerToClientCommand } from "../../../shared/commands/serverToClientCommand";
 
 export interface Message
 {

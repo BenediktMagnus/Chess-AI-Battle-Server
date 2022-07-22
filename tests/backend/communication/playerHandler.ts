@@ -2,14 +2,14 @@ import 'mocha';
 import * as mockito from 'ts-mockito';
 import * as TypedSocketIo from '../../../src/backend/server/typedSocketIo';
 import { assert } from 'chai';
-import { ClientToServerCommand } from '../../../src/backend/communication/command/clientToServerCommand';
+import { ClientToServerCommand } from '../../../src/shared/commands/clientToServerCommand';
 import { Colour } from '../../../src/shared/colour';
 import EventHandler from '../../../src/backend/utility/eventHandler';
 import { Game } from '../../../src/backend/game/game';
 import { PlayerConnection } from '../../../src/backend/server/playerConnection/playerConnection';
 import { PlayerHandler } from '../../../src/backend/communication/playerHandler';
 import { Server } from '../../../src/backend/server/server';
-import { ServerToClientCommand } from '../../../src/backend/communication/command/serverToClientCommand';
+import { ServerToClientCommand } from '../../../src/shared/commands/serverToClientCommand';
 import { Statistician } from '../../../src/backend/statistic/statistician';
 
 let serverMock: Server;

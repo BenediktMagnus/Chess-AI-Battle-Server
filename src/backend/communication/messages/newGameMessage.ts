@@ -1,6 +1,6 @@
 import { BaseMessage } from './baseMessage';
 import { Colour } from '../../../shared/colour';
-import { ServerToClientCommand } from '../command/serverToClientCommand';
+import { ServerToClientCommand } from '../../../shared/commands/serverToClientCommand';
 
 export class NewGameMessage extends BaseMessage
 {

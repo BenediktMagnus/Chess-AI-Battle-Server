@@ -1,5 +1,5 @@
 import { BaseMessage } from "./baseMessage";
-import { ServerToClientCommand } from "../command/serverToClientCommand";
+import { ServerToClientCommand } from "../../../shared/commands/serverToClientCommand";
 
 export class TimeoutMessage extends BaseMessage
 {

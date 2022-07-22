@@ -1,5 +1,5 @@
 import * as Messages from '../communication/messages/index';
-import { ClientToServerCommand } from '../communication/command/clientToServerCommand';
+import { ClientToServerCommand } from '../../shared/commands/clientToServerCommand';
 import { Colour } from '../../shared/colour';
 import { Game } from '../game/game';
 import { GameState } from '../game/gameState';

@@ -1,5 +1,5 @@
 import { Message } from './message';
-import { ServerToClientCommand } from '../command/serverToClientCommand';
+import { ServerToClientCommand } from '../../../shared/commands/serverToClientCommand';
 
 export abstract class BaseMessage implements Message
 {
