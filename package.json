@@ -17,7 +17,7 @@
     },
     "dependencies": {
         "chess.js": "0.12.1",
-        "cm-chessboard": "3.16.7",
+        "cm-chessboard": "4.3.9",
         "compression": "1.7.4",
         "express": "4.17.3",
         "socket.io": "4.4.1",
