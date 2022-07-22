@@ -151,7 +151,7 @@ class Main
         const from = move.substring(0, 2) as Square;
         const to = move.substring(2, 4) as Square;
 
-        await this.chessboard.movePiece(from, to);
+        await this.chessboard.movePiece(from, to, true);
 
         const chessMove: ShortMove = {
             from: from,
@@ -166,7 +166,7 @@ class Main
 
             const newPiece = (oldPiece.charAt(0) + promotion) as Piece; // Convert old piece to new piece of the same colour.
 
-            this.chessboard.setPiece(to, newPiece);
+            this.chessboard.setPiece(to, newPiece, true);
 
             chessMove.promotion = promotion as Exclude<PieceType, 'p' | 'k'>;
         }
@@ -247,7 +247,7 @@ class Main
             throw new Error('Server sent a start next game event while the UI is not fully initialised.');
         }
 
-        await this.chessboard.setPosition('start', false);
+        await this.chessboard.setPosition('start');
         this.chess?.reset();
 
         this.chessboard.disableMoveInput();
@@ -275,7 +275,7 @@ class Main
         }
 
         this.chessboard.disableMoveInput();
-        await this.chessboard.setPosition('empty', false);
+        await this.chessboard.setPosition('empty');
     }
 }
 
