@@ -6,7 +6,7 @@ import { ClientToServerCommand } from '../../../src/backend/communication/comman
 import { Colour } from '../../../src/shared/colour';
 import EventHandler from '../../../src/backend/utility/eventHandler';
 import { Game } from '../../../src/backend/game/game';
-import net from 'net';
+import { PlayerConnection } from '../../../src/backend/server/playerConnection/playerConnection';
 import { PlayerHandler } from '../../../src/backend/communication/playerHandler';
 import { Server } from '../../../src/backend/server/server';
 import { ServerToClientCommand } from '../../../src/backend/communication/command/serverToClientCommand';
@@ -14,12 +14,12 @@ import { Statistician } from '../../../src/backend/statistic/statistician';
 
 let serverMock: Server;
 let socketIoMock: TypedSocketIo.Server;
-let player1SocketMock: net.Socket;
-let player2SocketMock: net.Socket;
+let player1ConnectionMock: PlayerConnection;
+let player2ConnectionMock: PlayerConnection;
 
-let connectEventHandler: EventHandler<(socket: net.Socket) => void>;
-let disconnectEventHandler: EventHandler<(socket: net.Socket) => void>;
-let messageEventHandler: EventHandler<(socket: net.Socket, message: string) => void>;
+let connectEventHandler: EventHandler<(playerConnection: PlayerConnection) => void>;
+let disconnectEventHandler: EventHandler<(playerConnection: PlayerConnection) => void>;
+let messageEventHandler: EventHandler<(playerConnection: PlayerConnection, message: string) => void>;
 
 let playerHandler: PlayerHandler;
 
@@ -29,17 +29,24 @@ function resetTestEnvironment (): void
 {
     serverMock = mockito.mock(Server);
     socketIoMock = mockito.mock(TypedSocketIo.Server);
-    player1SocketMock = mockito.mock(net.Socket);
-    player2SocketMock = mockito.mock(net.Socket);
+    player1ConnectionMock = mockito.mock<PlayerConnection>();
+    player2ConnectionMock = mockito.mock<PlayerConnection>();
 
     connectEventHandler = new EventHandler();
     disconnectEventHandler = new EventHandler();
     messageEventHandler = new EventHandler();
 
-    mockito.when(serverMock.onConnect).thenReturn(connectEventHandler);
-    mockito.when(serverMock.onDisconnect).thenReturn(disconnectEventHandler);
-    mockito.when(serverMock.onMessage).thenReturn(messageEventHandler);
+    mockito.when(serverMock.onPlayerConnect).thenReturn(connectEventHandler);
+    mockito.when(serverMock.onPlayerDisconnect).thenReturn(disconnectEventHandler);
+    mockito.when(serverMock.onPlayerMessage).thenReturn(messageEventHandler);
     mockito.when(serverMock.socketIo).thenReturn(socketIoMock);
+
+    mockito.when(player1ConnectionMock.close()).thenReturn();
+    mockito.when(player1ConnectionMock.end()).thenReturn();
+    mockito.when(player1ConnectionMock.write(mockito.anyString())).thenReturn();
+    mockito.when(player2ConnectionMock.close()).thenReturn();
+    mockito.when(player2ConnectionMock.end()).thenReturn();
+    mockito.when(player2ConnectionMock.write(mockito.anyString())).thenReturn();
 
     const game = new Game();
     const statistician = new Statistician();
@@ -60,67 +67,65 @@ describe('PlayerHandler',
         it('allows only two connections.',
             function ()
             {
-                connectEventHandler.dispatchEvent(mockito.instance(player1SocketMock));
-                mockito.verify(player1SocketMock.destroy()).never();
+                connectEventHandler.dispatchEvent(mockito.instance(player1ConnectionMock));
+                mockito.verify(player1ConnectionMock.close()).never();
 
-                connectEventHandler.dispatchEvent(mockito.instance(player2SocketMock));
-                mockito.verify(player2SocketMock.destroy()).never();
+                connectEventHandler.dispatchEvent(mockito.instance(player2ConnectionMock));
+                mockito.verify(player2ConnectionMock.close()).never();
 
-                const player3SocketMock = mockito.mock(net.Socket);
+                const player3ConnectionMock = mockito.mock<PlayerConnection>();
 
-                connectEventHandler.dispatchEvent(mockito.instance(player3SocketMock));
-                mockito.verify(player3SocketMock.destroy()).once();
+                connectEventHandler.dispatchEvent(mockito.instance(player3ConnectionMock));
+                mockito.verify(player3ConnectionMock.close()).once();
             }
         );
 
         it('can play a turn for every player.',
             function ()
             {
-                const onMessageEventHandler = new EventHandler<(socket: net.Socket, message: string) => void>();
+                const onMessageEventHandler = new EventHandler<(playerConnection: PlayerConnection, message: string) => void>();
 
-                mockito.when(serverMock.onMessage).thenReturn(onMessageEventHandler);
+                mockito.when(serverMock.onPlayerMessage).thenReturn(onMessageEventHandler);
 
-                const player1Socket = mockito.instance(player1SocketMock);
-                const player2Socket = mockito.instance(player2SocketMock);
+                const player1Connection = mockito.instance(player1ConnectionMock);
+                const player2Connection = mockito.instance(player2ConnectionMock);
 
-                let whitePlayer = player1Socket;
-                let blackPlayer = player2Socket;
+                let whitePlayer = player1Connection;
+                let blackPlayer = player2Connection;
 
-                mockito.when(
-                    player2SocketMock.write(mockito.anyString()))
+                mockito.when(player2ConnectionMock.write(mockito.anyString()))
                     .thenCall(
                         (message: string) =>
                         {
                             if (message.endsWith(Colour.White))
                             {
-                                whitePlayer = player2Socket;
-                                blackPlayer = player1Socket;
+                                whitePlayer = player2Connection;
+                                blackPlayer = player1Connection;
                             }
-
-                            return true;
                         }
                     );
 
-                connectEventHandler.dispatchEvent(player1Socket);
-                connectEventHandler.dispatchEvent(player2Socket);
+                connectEventHandler.dispatchEvent(player1Connection);
+                connectEventHandler.dispatchEvent(player2Connection);
 
-                mockito.verify(player1SocketMock.write(mockito.anyString())).once();
-                mockito.resetCalls(player1SocketMock);
+                mockito.verify(player1ConnectionMock.write(mockito.anyString())).once();
+                mockito.resetCalls(player1ConnectionMock);
 
-                mockito.verify(player2SocketMock.write(mockito.anyString())).once();
-                mockito.resetCalls(player2SocketMock);
+                mockito.verify(player2ConnectionMock.write(mockito.anyString())).once();
+                mockito.resetCalls(player2ConnectionMock);
 
-                mockito.when(player2SocketMock.write(mockito.anyString())).thenReturn(true);
+                const assertTurnCall = (message: string): void =>
+                {
+                    assert.isTrue(message.startsWith(ServerToClientCommand.Turn));
+                };
 
-                const assertTurnCall = (message: string): void => { assert.isTrue(message.startsWith(ServerToClientCommand.Turn)); };
-
-                mockito.when(player1SocketMock.write(mockito.anyString())).thenCall(assertTurnCall);
-                mockito.when(player2SocketMock.write(mockito.anyString())).thenCall(assertTurnCall);
+                mockito.when(player1ConnectionMock.write(mockito.anyString())).thenCall(assertTurnCall);
+                mockito.when(player2ConnectionMock.write(mockito.anyString())).thenCall(assertTurnCall);
 
                 messageEventHandler.dispatchEvent(whitePlayer, ClientToServerCommand.Turn + 'a2a3');
                 messageEventHandler.dispatchEvent(blackPlayer, ClientToServerCommand.Turn + 'a7a6');
-                mockito.verify(player2SocketMock.write(mockito.anyString())).once();
-                mockito.verify(player1SocketMock.write(mockito.anyString())).once();
+                mockito.verify(player1ConnectionMock.write(mockito.anyString())).once();
+                mockito.verify(player2ConnectionMock.write(mockito.anyString())).once();
             }
         );
     }

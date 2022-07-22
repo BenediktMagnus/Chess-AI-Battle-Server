@@ -1,11 +1,11 @@
 import 'mocha';
 import * as mockito from 'ts-mockito';
 import { assert } from 'chai';
-import net from 'net';
 import { Player } from '../../../src/backend/game/player';
 import { PlayerList } from '../../../src/backend/game/playerList';
+import { PlayerConnection } from '../../../src/backend/server/playerConnection/playerConnection';
 
-const socketMock = mockito.mock(net.Socket);
+const connectionMock = mockito.mock(PlayerConnection);
 
 describe('PlayerList',
     function ()
@@ -23,7 +23,7 @@ describe('PlayerList',
             function ()
             {
                 const playerList = new PlayerList();
-                const player = new Player(mockito.instance(socketMock), 1);
+                const player = new Player(mockito.instance(connectionMock), 1);
 
                 playerList.add(player);
 
@@ -35,8 +35,8 @@ describe('PlayerList',
             function ()
             {
                 const playerList = new PlayerList();
-                const player1 = new Player(mockito.instance(socketMock), 1);
-                const player2 = new Player(mockito.instance(socketMock), 2);
+                const player1 = new Player(mockito.instance(connectionMock), 1);
+                const player2 = new Player(mockito.instance(connectionMock), 2);
 
                 playerList.add(player1);
                 playerList.add(player2);
@@ -49,7 +49,7 @@ describe('PlayerList',
             function ()
             {
                 const playerList = new PlayerList();
-                const player = new Player(mockito.instance(socketMock), 1);
+                const player = new Player(mockito.instance(connectionMock), 1);
 
                 playerList.add(player);
                 playerList.remove(player);
@@ -62,11 +62,11 @@ describe('PlayerList',
             function ()
             {
                 const playerList = new PlayerList();
-                const player = new Player(mockito.instance(socketMock), 1);
+                const player = new Player(mockito.instance(connectionMock), 1);
 
                 playerList.add(player);
 
-                assert.strictEqual(playerList.getBySocket(player.socket), player);
+                assert.strictEqual(playerList.getByConnection(player.connection), player);
             }
         );
 
@@ -74,9 +74,9 @@ describe('PlayerList',
             function ()
             {
                 const playerList = new PlayerList();
-                const player = new Player(mockito.instance(socketMock), 1);
+                const player = new Player(mockito.instance(connectionMock), 1);
 
-                const returnedPlayer = playerList.getBySocket(player.socket);
+                const returnedPlayer = playerList.getByConnection(player.connection);
 
                 assert.isNull(returnedPlayer);
             }
@@ -86,10 +86,10 @@ describe('PlayerList',
             function ()
             {
                 const playerList = new PlayerList();
-                const player = new Player(mockito.instance(socketMock), 1);
+                const player = new Player(mockito.instance(connectionMock), 1);
 
                 playerList.add(player);
-                playerList.removeBySocket(player.socket);
+                playerList.removeByConnection(player.connection);
 
                 assert.strictEqual(playerList.count, 0);
             }
@@ -99,9 +99,9 @@ describe('PlayerList',
             function ()
             {
                 const playerList = new PlayerList();
-                const player1 = new Player(mockito.instance(socketMock), 1);
-                const player2 = new Player(mockito.instance(socketMock), 2);
-                const player3 = new Player(mockito.instance(socketMock), 3);
+                const player1 = new Player(mockito.instance(connectionMock), 1);
+                const player2 = new Player(mockito.instance(connectionMock), 2);
+                const player3 = new Player(mockito.instance(connectionMock), 3);
 
                 playerList.add(player1);
                 playerList.add(player2);

@@ -5,17 +5,17 @@ import { Colour } from '../../../src/shared/colour';
 import { Game } from '../../../src/backend/game/game';
 import { GameState } from '../../../src/backend/game/gameState';
 import { MoveResult } from '../../../src/backend/game/moveResult';
-import net from 'net';
 import { Player } from '../../../src/backend/game/player';
+import { PlayerConnection } from '../../../src/backend/server/playerConnection/playerConnection';
 
-const socketMock = mockito.mock(net.Socket);
+const connectionMock = mockito.mock(PlayerConnection);
 
 describe('Game',
     function ()
     {
-        const whitePlayer = new Player(mockito.instance(socketMock), 0);
+        const whitePlayer = new Player(mockito.instance(connectionMock), 0);
         whitePlayer.colour = Colour.White;
-        const blackPlayer = new Player(mockito.instance(socketMock), 1);
+        const blackPlayer = new Player(mockito.instance(connectionMock), 1);
         blackPlayer.colour = Colour.Black;
 
         it('is in running state at the beginning.',
