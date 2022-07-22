@@ -2,8 +2,8 @@ import 'mocha';
 import * as mockito from 'ts-mockito';
 import { assert } from 'chai';
 import { Player } from '../../../src/backend/game/player';
-import { PlayerList } from '../../../src/backend/game/playerList';
 import { PlayerConnection } from '../../../src/backend/server/playerConnection/playerConnection';
+import { PlayerList } from '../../../src/backend/game/playerList';
 
 const connectionMock = mockito.mock(PlayerConnection);
 
