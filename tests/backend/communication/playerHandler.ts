@@ -97,7 +97,7 @@ describe('PlayerHandler',
                     .thenCall(
                         (message: string) =>
                         {
-                            if (message.endsWith(Colour.White))
+                            if (message == ServerToClientCommand.NewGame + Colour.White + '\n')
                             {
                                 whitePlayer = player2Connection;
                                 blackPlayer = player1Connection;
