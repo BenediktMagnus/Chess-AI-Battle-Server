@@ -147,13 +147,20 @@ declare module 'cm-chessboard'
 
         constructor (element?: HTMLElement|null, props?: RecursivePartial<BoardConfiguration>);
 
-        public setPiece (square: Square, piece: PIECE): void;
+        /**
+         * @param animated When set to true, setting the piece will be animated.
+         */
+        public setPiece (square: Square, piece: PIECE, animated?: boolean): void;
         public getPiece (square: Square): PIECE;
+
+        /**
+         * @param animated When set to true, the piece movement to the new position will be animated.
+         */
         public movePiece (squareFrom: Square, squareTo: Square, animated?: boolean): Promise<void>;
 
         /**
          * @param fen The FEN string, special values are "start" to set the chess start position and "empty" to set an empty board.
-         * @param animated When set to false, the new position will be shown instantly.
+         * @param animated When set to true, setting the new position will be animated.
          */
         public setPosition (fen: string, animated?: boolean): Promise<void>;
         public getPosition (): string;
